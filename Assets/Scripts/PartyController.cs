@@ -57,5 +57,7 @@ public class PartyController : MonoBehaviour
     private void OnDisable()
     {
         _input.Player.Disable();
+        _input.Player.Move.started -= Move_started;
+        _input.Player.Turn.started -= Turn_started;
     }
 }

@@ -90,7 +90,7 @@
                     "name": "Turn",
                     "type": "Value",
                     "id": "1088d587-7642-411c-b180-221500d0b50d",
-                    "expectedControlType": "",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -219,15 +219,59 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "3ea4d645-4504-4529-b061-ab81934c3752",
-                    "path": "<Joystick>/stick",
+                    "name": "Left Stick [Joystick]",
+                    "id": "d090a284-1132-44da-b832-34634e67d440",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "1cb7d319-c975-4e59-8bbd-a379e7a6cf0c",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "58990a82-4578-4232-85f4-415f61abd46f",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "58f05a76-83a5-46cc-8860-61be2bbf1d19",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "26724832-820a-422b-8701-1962b898d13c",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -494,7 +538,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "Negative",
                     "id": "8df8d82d-0f9e-4c7c-b59d-afd4190b4b9b",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -505,7 +549,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
+                    "name": "Positive",
                     "id": "3c86fd07-7693-444a-865f-50ef0e4fa9f1",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -518,7 +562,7 @@
                 {
                     "name": "Controller Shoulders",
                     "id": "ed21e1dd-d3b1-4554-a898-f0ecb31264fd",
-                    "path": "1DAxis",
+                    "path": "1DAxis(whichSideWins=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -527,23 +571,56 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
+                    "name": "Negative",
                     "id": "659d0f54-cb34-410b-9394-057f8dae7eb5",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
+                    "name": "Positive",
                     "id": "03b3cc4a-b49f-4074-8c49-79b6e85381e3",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right Stick left right",
+                    "id": "466bff66-294e-4c68-b4a9-1ac840ed744f",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "Scale(factor=1000),Clamp(min=-1,max=1)",
                     "groups": "",
+                    "action": "Turn",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "a89e449e-1c4e-4585-8881-b46231b7287b",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "6a4658fd-b954-41bc-8a76-10d79c85e7b5",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": true
