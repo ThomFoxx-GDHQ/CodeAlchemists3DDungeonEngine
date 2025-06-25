@@ -1,13 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PartyController : MonoBehaviour
 {
     InputSystem_Actions _input;
     Vector2 _movement;
+    Vector3 _moveDirection;
+    float _turnDirection;
     float _turn;
     [SerializeField] float _turnAngle = 90f;
     [SerializeField] float _gridTileSize = 2f;
+    [SerializeField] float _speed = 5f;
+    [SerializeField] float _turnSpeed = 1f;
 
     private void OnEnable()
     {
@@ -22,8 +27,10 @@ public class PartyController : MonoBehaviour
         //Debug.Log(obj.ToString());
         _turn = obj.ReadValue<float>();
 
-        transform.Rotate(Vector3.up, _turnAngle * _turn);
-               
+        _turnDirection = _turnAngle * _turn;
+
+        StartCoroutine(TurnRoutine(_turnDirection));
+        //transform.Rotate(Vector3.up, _turnAngle * _turn);               
     }
 
     private void Move_started(InputAction.CallbackContext obj)
@@ -33,25 +40,77 @@ public class PartyController : MonoBehaviour
         switch (_movement)
         {
             case Vector2 y when _movement.y > 0:
-                transform.Translate(Vector3.forward * _gridTileSize);
+                //transform.Translate(Vector3.forward * _gridTileSize);
+                _moveDirection = transform.forward * _gridTileSize;
                 break;
             case Vector2 y when _movement.y < 0:
-                transform.Translate(Vector3.back * _gridTileSize);
+                _moveDirection = (transform.forward * -1) * _gridTileSize;
                 break;
             case Vector2 x when _movement.x > 0:
-                transform.Translate(Vector3.right * _gridTileSize);
+                _moveDirection = transform.right * _gridTileSize;
                 break;
             case Vector2 x when _movement.x < 0:
-                transform.Translate(Vector3.left * _gridTileSize);
+                _moveDirection = (transform.right * -1) * _gridTileSize;
                 break;
             default:
+                _moveDirection = Vector3.zero;
                 break;
         }
+        StartCoroutine(MoveRoutine(_moveDirection));
     }
 
     private void Update()
     {
 
+    }
+
+    IEnumerator MoveRoutine(Vector3 direction)
+    {
+        Vector3 startPOS = transform.position;        
+        Vector3 targetPOS = transform.position + direction;
+        float step;
+        while (transform.position != targetPOS)
+        {
+            yield return null;
+            step = _speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, targetPOS, step);
+        }
+    }
+
+    IEnumerator TurnRoutine(float turnDirection)
+    {
+        float currentRotation = 0;
+        float step = 0;
+        float speed = _turnSpeed;
+        if (turnDirection < 0)
+            speed *= -1;
+
+        while (Mathf.Abs(currentRotation) < Mathf.Abs(turnDirection))
+        {
+            yield return null;
+            step += speed;
+
+            currentRotation += step;
+            transform.Rotate(Vector3.up, step);
+        }
+
+        Vector3 rotation = transform.rotation.eulerAngles;
+        switch (rotation.y)
+        {
+            case float y when (y > 350f && y < 10f):
+                rotation.y = 0;
+                break;
+            case float y when (y > 80f && y < 100f):
+                rotation.y = 90;
+                break;
+            case float y when (y > 170f && y < 190f):
+                rotation.y = 180;
+                break;
+            case float y when (y > 260f && y < 280f):
+                rotation.y = 270;
+                break;
+        }
+        transform.rotation = Quaternion.Euler(rotation);
     }
 
     private void OnDisable()
