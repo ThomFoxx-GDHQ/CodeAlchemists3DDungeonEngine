@@ -14,6 +14,9 @@ public class PartyController : MonoBehaviour
     [SerializeField] float _speed = 5f;
     [SerializeField] float _turnSpeed = 1f;
 
+    Vector3 _startPOS;
+    Vector3 _targetPOS;
+
     private void OnEnable()
     {
         _input = new InputSystem_Actions();
@@ -35,7 +38,7 @@ public class PartyController : MonoBehaviour
 
     private void Move_started(InputAction.CallbackContext obj)
     {
-        Debug.Log(obj.ToString());
+        //Debug.Log(obj.ToString());
         _movement = obj.ReadValue<Vector2>();
         switch (_movement)
         {
@@ -66,14 +69,14 @@ public class PartyController : MonoBehaviour
 
     IEnumerator MoveRoutine(Vector3 direction)
     {
-        Vector3 startPOS = transform.position;        
-        Vector3 targetPOS = transform.position + direction;
+        _startPOS = transform.position;        
+        _targetPOS = transform.position + direction;
         float step;
-        while (transform.position != targetPOS)
+        while (transform.position != _targetPOS)
         {
             yield return null;
             step = _speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, targetPOS, step);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPOS, step);
         }
     }
 
@@ -111,6 +114,28 @@ public class PartyController : MonoBehaviour
                 break;
         }
         transform.rotation = Quaternion.Euler(rotation);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "Environment":
+                _targetPOS = _startPOS;
+                break;
+            case "Enemy":
+                _targetPOS = _startPOS;
+                Debug.Log($"Player Takes Damage from {other.transform.name}!");
+                break;
+            case "NPC":
+                _targetPOS = _startPOS;
+                Debug.Log($"Player bumped into NPC {other.transform.name}.");
+                break;
+            default:
+                break;
+        }
+        
+        //Debug.Log($"Player hit {other.transform.name}");
     }
 
     private void OnDisable()
