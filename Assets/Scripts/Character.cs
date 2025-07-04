@@ -1,20 +1,6 @@
 using UnityEngine;
 
-public enum RaceType
-{
-    Human,
-    Elf,
-    Dwarf
-}
 
-public enum ClassType
-{
-    Warrior,
-    Mage,
-    Cleric,
-    Ranger,
-    Rogue
-}
 
 public class Character
 {
