@@ -3,8 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon(generic)", menuName = "Items/Weapon")]
 public class WeaponSO : ItemSO
 {
-    private int _itemId;
-
+    
     public string _name;
     public string _description;
     public Sprite _icon;    
@@ -14,8 +13,18 @@ public class WeaponSO : ItemSO
     public int _stretgh;
     public ClassType[] _classCanWield;
 
-    private void Awake()
+    [HideInInspector]
+    [SerializeField]
+    private int SavedId;
+
+    protected override void Awake()
     {
-        _itemId = ItemManager.ID;
+        //if we have a saved ID, update ItemId since it doesn't save
+        ItemId = SavedId;
+        //call base awake to use ItemId to Add our item + Id, or get a new one if no Id was saved.
+        base.Awake();
+        //if saved, this should be same number, but if none saved, updated with new ID
+        SavedId = ItemId; 
     }
+    
 }

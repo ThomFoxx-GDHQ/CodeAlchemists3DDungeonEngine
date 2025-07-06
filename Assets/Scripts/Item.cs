@@ -1,4 +1,3 @@
-using UnityEditor.Search;
 using UnityEngine;
 
 public abstract class Item : MonoBehaviour
@@ -21,10 +20,10 @@ public abstract class Item : MonoBehaviour
 public class Weapon : Item
 {
     int _damage;
-    int _stretgh;
+    int _strength;
     ClassType[] _classCanWield;
 
-    public Weapon (int itemID, string name,string description, Sprite icon, int value, float weight, int damage, int stretgh, ClassType[] classCanWield)
+    public Weapon (int itemID, string name,string description, Sprite icon, int value, float weight, int damage, int strength, ClassType[] classCanWield)
     {
         _itemID = itemID;
         _name = name;
@@ -33,7 +32,7 @@ public class Weapon : Item
         _value = value;
         _weight = weight;
         _damage = damage;
-        _stretgh = stretgh;
+        _strength = strength;
         _classCanWield = classCanWield;
     }
 }
@@ -42,7 +41,7 @@ public class Food : Item
 {
     int _foodValue;
 
-    public Food(int itemID, string name, string description, Sprite icon, int value, float weight, int foodvalue)
+    public Food(int itemID, string name, string description, Sprite icon, int value, float weight, int foodValue)
     {
         _itemID = itemID;
         _name = name;
@@ -50,7 +49,7 @@ public class Food : Item
         _icon = icon;
         _value = value;
         _weight = weight;
-        _foodValue = foodvalue;            
+        _foodValue = foodValue;            
     }
 }
 
