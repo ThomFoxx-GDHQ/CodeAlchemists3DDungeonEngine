@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1d114fc759845478728a3e135ede01, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  Id: 3
   _name: Basic Sword
   _description: Beginner's Sword
   _icon: {fileID: 0}
@@ -20,3 +21,4 @@ MonoBehaviour:
   _damage: 1
   _stretgh: 1
   _classCanWield: 000000000300000004000000
+  SavedId: 3
