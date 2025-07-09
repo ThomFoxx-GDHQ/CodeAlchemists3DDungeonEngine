@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 public class Character
 {
     private string _name;
@@ -16,6 +14,8 @@ public class Character
     private int _wisdom;
     private int _currentHealth;
     private int _currentMagic;
+
+    private int[,] _inventory = new int[9,2];
 
     public string Name => _name;
     public RaceType Race => _race;
@@ -84,4 +84,24 @@ public class Character
         if (damageAmount >0)
             _currentHealth -= damageAmount;
     }
+
+    public bool AddToInventory(Item item, int amount, int position)
+    {        
+        //check if item Matches
+        if (_inventory[position,0] == item.ItemID)
+            _inventory[position,1] += amount;
+
+        //Fill in Empty
+        else if (_inventory[position, 0] == 0)
+        {
+            _inventory[position, 0] = item.ItemID;
+            _inventory[position, 1] = amount;
+        }
+
+        //Check if Empty
+        else if (_inventory[position, 0] != 0) return false;
+
+        return true;
+    }
+        
 }
