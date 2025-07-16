@@ -4,11 +4,6 @@ using UnityEngine;
 public class WeaponSO : ItemSO
 {
     
-    public string _name;
-    public string _description;
-    public Sprite _icon;    
-    public int _value;
-    public float _weight;
     public int _damage;
     public int _stretgh;
     public ClassType[] _classCanWield;
