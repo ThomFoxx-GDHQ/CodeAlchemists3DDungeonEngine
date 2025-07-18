@@ -1,8 +1,12 @@
 using UnityEngine;
+using System;
 
+using Random = UnityEngine.Random;
+
+[System.Serializable]
 public class Character
 {
-    private string _name;
+    public string name;
     private RaceType _race;
     private ClassType _jobType;
     private int _healthPoints;
@@ -15,9 +19,9 @@ public class Character
     private int _currentHealth;
     private int _currentMagic;
 
-    private int[,] _inventory = new int[9,2];
+    private int[,] _inventory = new int[3,4];
 
-    public string Name => _name;
+    public string Name => name;
     public RaceType Race => _race;
     public ClassType JobType => _jobType;
     public int HealthPoints => _healthPoints;
@@ -46,7 +50,7 @@ public class Character
     /// <param name="wisdom"></param>
     public Character(string name, RaceType race, ClassType jobType, int healthPoints, int magicPoints, int strength, int agility, int constitution, int fortitude, int wisdom)
     {
-        this._name = name;
+        this.name = name;
         this._race = race;
         this._jobType = jobType;
         this._healthPoints = healthPoints;
@@ -65,7 +69,7 @@ public class Character
     /// </summary>
     public Character(string name, RaceType race, ClassType jobType)
     {
-        this._name = name;
+        this.name = name;
         this._race = race;
         this._jobType = jobType;
         this._healthPoints = 100;
@@ -78,7 +82,7 @@ public class Character
         this._fortitude = Random.Range(12, 20);
         this._wisdom = Random.Range(12, 20);
     }
-
+    
     public void TakeDamage(int damageAmount)
     {
         if (damageAmount >0)
@@ -103,5 +107,5 @@ public class Character
 
         return true;
     }
-        
+               
 }

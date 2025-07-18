@@ -56,8 +56,8 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
 
     public void OnEndDrag(PointerEventData eventData)
-    {   
-        //Dropping Over Toos Area
+    {
+        //Dropping Over Toss Area
         if (eventData.pointerEnter?.transform.name == "TossPanel")
         {
             // Replace with real Code for removing from inventory
@@ -90,7 +90,7 @@ public class DraggableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         else
             transform.SetParent(_lastParent);
 
-            transform.localPosition = Vector3.zero;
+        transform.localPosition = Vector3.zero;
         _icon.raycastTarget = true;
     }
 }
