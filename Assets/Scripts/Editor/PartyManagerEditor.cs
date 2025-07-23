@@ -11,9 +11,13 @@ public class PartyManagerEditor: Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
+        _showExtraInfo = EditorPrefs.GetBool(name, false);
+        EditorGUI.BeginChangeCheck();
         _showExtraInfo = EditorGUILayout.Toggle("Show party information", _showExtraInfo);
-        
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorPrefs.SetBool(name, _showExtraInfo);
+        }
         if (!_showExtraInfo) return;
 
         var manger = (PartyManager)target;
