@@ -6,6 +6,8 @@ public class PartyManager : MonoBehaviour
     private Character[,] _party = new Character[2, 2];
     [SerializeField] private List<Character> _partyList = new List<Character>();
 
+    public Character[,] Party => _party;
+
     public void AddPartyMember(Character character)
     {
         if (_partyList.Count < 4 && !_partyList.Contains(character))
