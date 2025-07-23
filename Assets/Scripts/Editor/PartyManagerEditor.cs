@@ -5,10 +5,17 @@ using UnityEditor;
 public class PartyManagerEditor: Editor
 {
     private bool _showStats = false;
+    private bool _showExtraInfo = false;
+    
     
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+
+        _showExtraInfo = EditorGUILayout.Toggle(_showExtraInfo, "Show party information");
+        
+        if (!_showExtraInfo) return;
+
         var manger = (PartyManager)target;
 
         var row = manger.Party.GetLength(0);
