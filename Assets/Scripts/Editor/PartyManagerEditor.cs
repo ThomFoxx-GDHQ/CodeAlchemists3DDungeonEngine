@@ -12,7 +12,7 @@ public class PartyManagerEditor: Editor
     {
         base.OnInspectorGUI();
 
-        _showExtraInfo = EditorGUILayout.Toggle(_showExtraInfo, "Show party information");
+        _showExtraInfo = EditorGUILayout.Toggle("Show party information", _showExtraInfo);
         
         if (!_showExtraInfo) return;
 
