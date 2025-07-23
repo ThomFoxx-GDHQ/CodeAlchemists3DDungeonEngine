@@ -63,6 +63,8 @@ public class Character
         this._fortitude = fortitude;
         this._wisdom = wisdom;
     }
+   
+
 
     /// <summary>
     /// Creates a Generic Character with Random Stats
