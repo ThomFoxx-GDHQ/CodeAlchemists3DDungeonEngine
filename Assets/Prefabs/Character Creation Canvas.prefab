@@ -2795,7 +2795,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2375353838371056149}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3593052242924897375}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3413732886952979617
 GameObject:
   m_ObjectHideFlags: 0
@@ -3204,7 +3216,7 @@ MonoBehaviour:
   _constitutionField: {fileID: 1946767751355990886}
   _fortitudeField: {fileID: 465277249690675862}
   _wisdomField: {fileID: 5857091336010520161}
-  _points: {fileID: 8560296042762647585}
+  _pointsText: {fileID: 8560296042762647585}
 --- !u!1 &3605700752950266678
 GameObject:
   m_ObjectHideFlags: 0

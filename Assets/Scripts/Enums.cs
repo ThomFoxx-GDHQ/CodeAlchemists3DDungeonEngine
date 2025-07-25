@@ -14,6 +14,7 @@ public enum ClassType
     Rogue
 }
 
+[System.Serializable]
 public enum Stats
 {
     Strength, 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PartyController : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class PartyController : MonoBehaviour
 
     private void Move_started(InputAction.CallbackContext obj)
     {
+        if (!IsAbleToMove()) return;
+
         //Debug.Log(obj.ToString());
         _movement = obj.ReadValue<Vector2>();
         switch (_movement)
@@ -78,6 +81,16 @@ public class PartyController : MonoBehaviour
             step = _speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _targetPOS, step);
         }
+    }
+
+    private bool IsAbleToMove()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            if (EventSystem.current.currentSelectedGameObject.GetComponent<UnityEngine.UI.InputField>() != null) return false;
+            if (EventSystem.current.currentSelectedGameObject.GetComponent<TMPro.TMP_InputField>() != null) return false;
+        }
+        return true;
     }
 
     IEnumerator TurnRoutine(float turnDirection)

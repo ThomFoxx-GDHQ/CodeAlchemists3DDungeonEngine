@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyManager : MonoBehaviour
+public class PartyManager : MonoSingleton<PartyManager>
 {
     private Character[,] _party = new Character[2, 2];
     [SerializeField] private List<Character> _partyList = new List<Character>();
 
     public Character[,] Party => _party;
+    public int PartySize => _partyList.Count;
 
     public void AddPartyMember(Character character)
     {
