@@ -35,5 +35,11 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     public void AddCharacterToMasterList(Character character)
     {
         _masterCharacterList.Add(character);
+        SaveManager.Instance.CharacterListToJson(_masterCharacterList);
+    }
+
+    public void ReloadMasterList(List<Character> characterList)
+    {
+        _masterCharacterList = characterList;
     }
 }

@@ -7,19 +7,19 @@ using Random = UnityEngine.Random;
 public class Character
 {
     public string name;
-    private RaceType _race;
-    private ClassType _jobType;
-    private int _healthPoints;
-    private int _magicPoints;
-    private int _strength;
-    private int _agility;
-    private int _constitution;
-    private int _fortitude;
-    private int _wisdom;
-    private int _currentHealth;
-    private int _currentMagic;
+    [SerializeField] private RaceType _race;
+    [SerializeField] private ClassType _jobType;
+    [SerializeField] private int _healthPoints;
+    [SerializeField] private int _magicPoints;
+    [SerializeField] private int _strength;
+    [SerializeField] private int _agility;
+    [SerializeField] private int _constitution;
+    [SerializeField] private int _fortitude;
+    [SerializeField] private int _wisdom;
+    [SerializeField] private int _currentHealth;
+    [SerializeField] private int _currentMagic;
 
-    private int[,] _inventory = new int[3,4];
+    [SerializeField] private int[,] _inventory = new int[3,4];
 
     public string Name => name;
     public RaceType Race => _race;
