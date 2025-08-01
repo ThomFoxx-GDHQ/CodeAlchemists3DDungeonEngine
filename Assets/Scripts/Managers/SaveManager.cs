@@ -8,6 +8,7 @@ public class SaveManager : MonoSingleton<SaveManager>
     string _path;
     string _masterListPath;
     [SerializeField] string _masterListFilename;
+    [SerializeField] string _encryptKey;
 
     public override void Init()
     {
@@ -29,12 +30,15 @@ public class SaveManager : MonoSingleton<SaveManager>
         serializedList.masterList = list;
 
         _jsonString = JsonUtility.ToJson(serializedList);
+        _jsonString = Cipher.EncryptDecrypt(_jsonString, _encryptKey);
         SaveData();
     }
 
     public void CharacterFileToList(string file)
     {
         MasterCharacterList list = new MasterCharacterList();
+        file = Cipher.EncryptDecrypt(file, _encryptKey);
+
         list = JsonUtility.FromJson<MasterCharacterList>(file);
         CharacterManager.Instance.ReloadMasterList(list.masterList);
     }

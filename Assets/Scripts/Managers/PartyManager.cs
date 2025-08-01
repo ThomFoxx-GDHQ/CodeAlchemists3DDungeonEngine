@@ -18,7 +18,11 @@ public class PartyManager : MonoSingleton<PartyManager>
 
     public void RemovePartyMember(Character character)
     {
-
+        if (_partyList.Contains(character))
+        {
+            _partyList.Remove(character);
+            LoadListToParty();
+        }
     }
 
     //For testing
@@ -38,6 +42,4 @@ public class PartyManager : MonoSingleton<PartyManager>
             }
         }
     }
-
-
 }

@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
 
 public class CharacterCreationUIManager : MonoBehaviour
 {
