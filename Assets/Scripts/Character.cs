@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class Character
 {
     public string name;
+    [SerializeField] private int _portraitID;
     [SerializeField] private RaceType _race;
     [SerializeField] private ClassType _jobType;
     [SerializeField] private int _healthPoints;
@@ -33,6 +34,7 @@ public class Character
     public int Wisdom => _wisdom;
     public int CurrentHealth => _currentHealth;
     public int CurrentMagic => _currentMagic;
+    public int PortraitID => _portraitID;
 
 
     /// <summary>
@@ -48,7 +50,7 @@ public class Character
     /// <param name="constitution"></param>
     /// <param name="fortitude"></param>
     /// <param name="wisdom"></param>
-    public Character(string name, RaceType race, ClassType jobType, int healthPoints, int magicPoints, int strength, int agility, int constitution, int fortitude, int wisdom)
+    public Character(string name, RaceType race, ClassType jobType, int healthPoints, int magicPoints, int strength, int agility, int constitution, int fortitude, int wisdom,int portraitID)
     {
         this.name = name;
         this._race = race;
@@ -62,6 +64,7 @@ public class Character
         this._constitution = constitution;
         this._fortitude = fortitude;
         this._wisdom = wisdom;
+        this._portraitID = portraitID;
     }
    
 

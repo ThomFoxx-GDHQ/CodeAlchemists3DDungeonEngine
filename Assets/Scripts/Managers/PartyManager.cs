@@ -5,6 +5,10 @@ public class PartyManager : MonoSingleton<PartyManager>
 {
     private Character[,] _party = new Character[2, 2];
     [SerializeField] private List<Character> _partyList = new List<Character>();
+    [SerializeField] private Transform _characterGroupPanel;
+    [SerializeField] private GameObject _characterPanelPrefab;
+    private List<GameObject> _panelList = new List<GameObject>();
+
 
     public Character[,] Party => _party;
     public int PartySize => _partyList.Count;
@@ -12,7 +16,12 @@ public class PartyManager : MonoSingleton<PartyManager>
     public void AddPartyMember(Character character)
     {
         if (_partyList.Count < 4 && !_partyList.Contains(character))
+        {
             _partyList.Add(character);
+            GameObject go = Instantiate(_characterPanelPrefab, _characterGroupPanel);
+            go.GetComponent<CharacterPanelUI>().AddCharacter(character);
+            _panelList.Add(go);
+        }
         LoadListToParty();
     }
 
@@ -20,7 +29,9 @@ public class PartyManager : MonoSingleton<PartyManager>
     {
         if (_partyList.Contains(character))
         {
+            int index = _partyList.IndexOf(character);
             _partyList.Remove(character);
+            _panelList.RemoveAt(index);
             LoadListToParty();
         }
     }

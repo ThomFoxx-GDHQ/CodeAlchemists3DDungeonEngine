@@ -172,7 +172,7 @@ public class CharacterCreationUIManager : MonoBehaviour
 
     public void BuildCharacter()
     {
-        Character character = new Character(_characterName, _characterRace, _characterClass, 100, 100, _strength, _agility, _constitution, _fortitude, _wisdom);
+        Character character = new Character(_characterName, _characterRace, _characterClass, 100, 100, _strength, _agility, _constitution, _fortitude, _wisdom,0);
         CharacterManager.Instance.AddCharacterToMasterList(character);
         if (PartyManager.Instance.PartySize <4)
             PartyManager.Instance.AddPartyMember(character);

@@ -330,7 +330,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1197734697523860827}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: RemoveFromStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Agility
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &313185395671571784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,7 +1237,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7264930171997436136}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: RemoveFromStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Strength
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1413243735131803831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,7 +1862,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 838958211361341902}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: AddToStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Fortitude
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1797491885591090324
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,7 +2123,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 469767230945784636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: BuildCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1963716666394972148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,7 +2499,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2431596891772145646}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: AddToStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Agility
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2234193173917144557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,16 +2856,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3593052242924897375}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: AddToStat
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Strength
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3413732886952979617
@@ -3216,7 +3276,8 @@ MonoBehaviour:
   _constitutionField: {fileID: 1946767751355990886}
   _fortitudeField: {fileID: 465277249690675862}
   _wisdomField: {fileID: 5857091336010520161}
-  _pointsText: {fileID: 8560296042762647585}
+  _pointsText: {fileID: 7845402862194214794}
+  _pointsTotal: 10
 --- !u!1 &3605700752950266678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3598,7 +3659,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2433224502964277372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: AddToStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Wisdom
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3906451197282946172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3875,7 +3948,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5056458550663055674}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: RemoveFromStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Fortitude
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4002314224191115501
 GameObject:
   m_ObjectHideFlags: 0
@@ -4233,7 +4318,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2907310838778775711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: RemoveFromStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Wisdom
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4271511891489250874
 GameObject:
   m_ObjectHideFlags: 0
@@ -6777,7 +6874,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8109249532327088583}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: RemoveFromStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Constitution
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7149093230668903631
 GameObject:
   m_ObjectHideFlags: 0
@@ -6897,7 +7006,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6049722817550384984}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2784244328719016126}
+        m_TargetAssemblyTypeName: CharacterCreationUIManager, Assembly-CSharp
+        m_MethodName: AddToStat
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Constitution
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7276211556237524990
 GameObject:
   m_ObjectHideFlags: 0

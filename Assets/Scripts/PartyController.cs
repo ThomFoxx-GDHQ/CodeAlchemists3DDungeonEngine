@@ -28,6 +28,8 @@ public class PartyController : MonoBehaviour
 
     private void Turn_started(InputAction.CallbackContext obj)
     {
+        if (!IsAbleToMove()) return;
+
         //Debug.Log(obj.ToString());
         _turn = obj.ReadValue<float>();
 

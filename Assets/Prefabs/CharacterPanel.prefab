@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 4202781106576604650}
   - component: {fileID: 1093719848355257889}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2114,6 +2114,7 @@ GameObject:
   - component: {fileID: 3115604772164516085}
   - component: {fileID: 981812770764824150}
   - component: {fileID: 1207074000276805269}
+  - component: {fileID: 713328861804542954}
   m_Layer: 5
   m_Name: CharacterPanel
   m_TagString: Untagged
@@ -2186,6 +2187,44 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &713328861804542954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6981312523977504614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc96f526fba81f4fb5669d12bec8c79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameText: {fileID: 1980576834855539506}
+  _raceText: {fileID: 5452410387652781378}
+  _classText: {fileID: 3635489295023002612}
+  _portrait: {fileID: 8237179389908483966}
+  _healthFill: {fileID: 2047769466270985500}
+  _manaFill: {fileID: 8588749234055862755}
+  _strengthValue: {fileID: 3534271102785724637}
+  _agilityValue: {fileID: 2775411331387412643}
+  _fortitudeValue: {fileID: 1586241566420495837}
+  _wisdomValue: {fileID: 6149452888731064961}
+  _constitutionValue: {fileID: 1832942444400283766}
+  _radarComponent: {fileID: 6444261534076783621}
+  _character:
+    name: Thomas
+    _portraitID: 5
+    _race: 1
+    _jobType: 3
+    _healthPoints: 100
+    _magicPoints: 100
+    _strength: 15
+    _agility: 13
+    _constitution: 15
+    _fortitude: 13
+    _wisdom: 10
+    _currentHealth: 75
+    _currentMagic: 50
 --- !u!1 &7043673934541378922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2271,7 +2310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2879059785970990218}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Portrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2295,7 +2334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 47.5, y: -11.3}
+  m_AnchoredPosition: {x: 47.5, y: -11.299988}
   m_SizeDelta: {x: 77.3185, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7266418799713346958
