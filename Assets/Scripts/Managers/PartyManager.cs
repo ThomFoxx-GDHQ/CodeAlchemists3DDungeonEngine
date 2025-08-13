@@ -9,7 +9,6 @@ public class PartyManager : MonoSingleton<PartyManager>
     [SerializeField] private GameObject _characterPanelPrefab;
     private List<GameObject> _panelList = new List<GameObject>();
 
-
     public Character[,] Party => _party;
     public int PartySize => _partyList.Count;
 

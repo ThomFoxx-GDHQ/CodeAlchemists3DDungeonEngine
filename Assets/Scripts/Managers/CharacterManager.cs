@@ -9,6 +9,8 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     [SerializeField] private List<Character> _masterCharacterList = new List<Character>();
     private PartyManager _partyManager;
 
+    public List<Character> MasterCharacterList => _masterCharacterList;
+
     private void Start()
     {
         _partyManager = GetComponent<PartyManager>();

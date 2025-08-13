@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +30,12 @@ public class CharacterPanelUI : MonoBehaviour
     {
         _character = character;
         UpdatePanelInfo();
+    }
+
+    public void RemoveFromParty()
+    {
+        PartyManager.Instance.RemovePartyMember(_character);
+        Destroy(this.gameObject);
     }
 
     [ContextMenu("Update Character Panel")]
