@@ -12,8 +12,17 @@ public class LoadCharacterPanelUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_contentTransform.childCount > 0)
+        {
+            int childs = _contentTransform.childCount;
+            for (int i = childs - 1; i >= 0; i--)
+            {
+                GameObject.Destroy(_contentTransform.GetChild(i).gameObject);
+            }
+        }
+
         _buttons.Clear();
-        foreach(Character character in CharacterManager.Instance.MasterCharacterList)
+        foreach (Character character in CharacterManager.Instance.MasterCharacterList)
         {
             _infoPanel = Instantiate(_characterInfoPrefab, _contentTransform);
             _characterInfoUI = _infoPanel.GetComponent<ShortCharacterInfoUI>();
@@ -26,8 +35,18 @@ public class LoadCharacterPanelUI : MonoBehaviour
 
     public void PartyCheck()
     {
+        Debug.Log("Checking Party Size");
+
         if (PartyManager.Instance.PartySize >= 4)
             foreach (Button button in _buttons)
                 button.interactable = false;
+        else
+            foreach (Button button in _buttons)
+            {
+                if (!PartyManager.Instance.PartyList.Contains(button.GetComponent<ShortCharacterInfoUI>().Character))
+                {
+                    button.interactable = true;
+                }
+            }
     }
 }

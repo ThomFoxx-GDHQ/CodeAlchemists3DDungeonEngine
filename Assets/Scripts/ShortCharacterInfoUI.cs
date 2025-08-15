@@ -11,13 +11,15 @@ public class ShortCharacterInfoUI : MonoBehaviour
     [SerializeField] TMP_Text _raceText;
     Button _button;
 
+    public Character Character => _character;
+
     private void OnEnable()
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() =>
         {
-            GetComponentInParent<LoadCharacterPanelUI>().PartyCheck();
             AddToParty();
+            GetComponentInParent<LoadCharacterPanelUI>().PartyCheck();
         });
     }
 
@@ -33,5 +35,6 @@ public class ShortCharacterInfoUI : MonoBehaviour
     public void AddToParty()
     {
         PartyManager.Instance.AddPartyMember(_character);
+        _button.interactable = false;
     }
 }

@@ -2,12 +2,14 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class CharacterCreationUIManager : MonoBehaviour
 {
     [SerializeField] TMP_InputField _nameField;
     [SerializeField] TMP_Dropdown _raceDropDown;
     [SerializeField] TMP_Dropdown _classDropdown;
+    [SerializeField] Image _portraitImage;
 
     [SerializeField] TMP_InputField _strengthField;
     [SerializeField] TMP_InputField _agilityField;
@@ -25,6 +27,7 @@ public class CharacterCreationUIManager : MonoBehaviour
     int _constitution = 10;
     int _fortitude = 10;
     int _wisdom= 10;
+    int _portraitID = 0;
 
 
     List<string> _strings = new List<string>();
@@ -172,7 +175,7 @@ public class CharacterCreationUIManager : MonoBehaviour
 
     public void BuildCharacter()
     {
-        Character character = new Character(_characterName, _characterRace, _characterClass, 100, 100, _strength, _agility, _constitution, _fortitude, _wisdom,0);
+        Character character = new Character(_characterName, _characterRace, _characterClass, 100, 100, _strength, _agility, _constitution, _fortitude, _wisdom,_portraitID);
         CharacterManager.Instance.AddCharacterToMasterList(character);
         if (PartyManager.Instance.PartySize <4)
             PartyManager.Instance.AddPartyMember(character);
@@ -190,6 +193,7 @@ public class CharacterCreationUIManager : MonoBehaviour
         _wisdomField .text = string.Empty;
         _raceDropDown.SetValueWithoutNotify(0);
         _classDropdown.SetValueWithoutNotify(0);
+        _portraitImage.sprite = PortraitManager.Instance.GetPortrait(0);
 
         _characterName= string.Empty;
         _characterRace = RaceType.Human;
@@ -201,5 +205,24 @@ public class CharacterCreationUIManager : MonoBehaviour
         _wisdom = 10;
         _pointsTotal = 10;
         _pointsText.text = _pointsTotal.ToString();
+        _portraitID = 0;
+
+    }
+
+    public void ChangePortait(int direction)
+    {
+        if (direction < 0)
+            _portraitID--;
+        else if (direction > 0)
+            _portraitID++;
+        else 
+            _portraitID = 0;
+
+        if (_portraitID < 0)
+            _portraitID = PortraitManager.Instance.PortraitCount - 1;
+        if (_portraitID > PortraitManager.Instance.PortraitCount)
+            _portraitID = 0;
+
+        _portraitImage.sprite = PortraitManager.Instance.GetPortrait(_portraitID);
     }
 }

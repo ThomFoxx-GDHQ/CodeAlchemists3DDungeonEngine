@@ -11,6 +11,7 @@ public class PartyManager : MonoSingleton<PartyManager>
 
     public Character[,] Party => _party;
     public int PartySize => _partyList.Count;
+    public List<Character> PartyList => _partyList;
 
     public void AddPartyMember(Character character)
     {

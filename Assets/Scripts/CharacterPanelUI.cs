@@ -35,6 +35,10 @@ public class CharacterPanelUI : MonoBehaviour
     public void RemoveFromParty()
     {
         PartyManager.Instance.RemovePartyMember(_character);
+        var loadPanel = GameObject.FindFirstObjectByType<LoadCharacterPanelUI>(FindObjectsInactive.Include);
+        if (loadPanel != null)
+            loadPanel.PartyCheck();
+
         Destroy(this.gameObject);
     }
 
