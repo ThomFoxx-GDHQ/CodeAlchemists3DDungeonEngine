@@ -6,16 +6,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 {
     bool _isEmpty = true;
     [SerializeField] GameObject _emptySlotImage;
+    [SerializeField] bool _isPanel;
 
     public bool IsEmpty => _isEmpty;
 
     public void UpdateSlot(GameObject item)
     {
-        if (transform.childCount > 1)
+        if (item == null)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            _isEmpty = true;
+            return;
+        }
+        Debug.Log("Update Slot is Called");
+        if (transform.childCount > 0)
         {
             transform.GetChild(0).gameObject.SetActive(false);
+            item.transform.SetParent(transform, false);
             item.transform.SetAsLastSibling();
-            item.transform.position = Vector3.zero;
+            item.transform.localPosition = Vector3.zero;
             item.GetComponent<Image>().raycastTarget = true;
             _isEmpty = false;
         }
@@ -29,6 +38,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
+
+        if (_isPanel)
+        {
+            dropped.GetComponent<InventoryItem>().ReturnToSender();
+            return;
+        }
 
         if (_isEmpty)
             UpdateSlot(dropped);

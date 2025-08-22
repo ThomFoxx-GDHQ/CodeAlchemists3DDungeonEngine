@@ -73,11 +73,13 @@ public class ItemManager
         itemSo.Remove(item);
     }
 
-
     public Item RequestItem(ItemSO item)
     {
         return null;
     }
 
-
+    public Item RequestItem(int index)
+    {
+        return null;
+    }
 }

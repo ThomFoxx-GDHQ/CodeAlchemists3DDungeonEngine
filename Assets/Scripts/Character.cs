@@ -20,7 +20,7 @@ public class Character
     [SerializeField] private int _currentHealth;
     [SerializeField] private int _currentMagic;
 
-    [SerializeField] private int[,] _inventory = new int[3,4];
+    [SerializeField] private ItemStruct[,] _inventory = new ItemStruct[8,4];
 
     public string Name => name;
     public RaceType Race => _race;
@@ -94,21 +94,18 @@ public class Character
             _currentHealth -= damageAmount;
     }
 
-    public bool AddToInventory(Item item, int amount, int position)
-    {        
+    public bool AddToInventory(Item item, int amount, Vector2Int position)
+    {
         //check if item Matches
-        if (_inventory[position,0] == item.ItemID)
-            _inventory[position,1] += amount;
+        if (_inventory[position.x, position.y].ID == item.ItemID)
+            _inventory[position.x, position.y].Quantity += amount;
 
         //Fill in Empty
-        else if (_inventory[position, 0] == 0)
-        {
-            _inventory[position, 0] = item.ItemID;
-            _inventory[position, 1] = amount;
-        }
+        else if (_inventory[position.x, position.y] == default)
+            _inventory[position.x, position.y] = new ItemStruct(item.ItemID, amount);
 
         //Check if Empty
-        else if (_inventory[position, 0] != 0) return false;
+        else if (_inventory[position.x, position.y].ID != 0) return false;
 
         return true;
     }

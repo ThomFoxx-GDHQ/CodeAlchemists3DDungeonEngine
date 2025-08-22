@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     GameObject _draggingIcon;
     [SerializeField] RectTransform _canvas;
@@ -17,10 +17,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _originalParent = _draggingIcon.transform.parent;
+        if (_draggingIcon.transform.parent.TryGetComponent<InventorySlot>(out InventorySlot slot))
+        {
+            _originalParent = _draggingIcon.transform.parent;
+        }
         _draggingIcon.transform.SetParent(_canvas, false);
         _draggingIcon.transform.SetAsLastSibling();
-        _originalParent.GetComponent<InventorySlot>().UpdateSlot(_draggingIcon);
+        _originalParent.GetComponent<InventorySlot>().UpdateSlot(null);
         _draggingIcon.GetComponent<Image>().raycastTarget = false;
     }
 
@@ -37,11 +40,15 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void ReturnToSender()
     {
-        _draggingIcon.transform.parent = _originalParent;
+        Debug.Log("Return to Sender Called");
+        _draggingIcon.transform.SetParent(_originalParent);
         _draggingIcon.GetComponent<Image>().raycastTarget = true;
         _draggingIcon.transform.SetAsLastSibling();
-        _draggingIcon.transform.position = Vector3.zero;        
+        _draggingIcon.transform.localPosition = Vector3.zero;        
     }
 
-
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _draggingIcon.GetComponent<Image>().raycastTarget = true;
+    }
 }
