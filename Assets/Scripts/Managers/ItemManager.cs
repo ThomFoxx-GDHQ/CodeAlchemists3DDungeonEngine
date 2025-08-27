@@ -78,8 +78,14 @@ public class ItemManager
         return null;
     }
 
-    public Item RequestItem(int index)
+    public static ItemSO RequestItem(int index)
     {
+        foreach (KeyValuePair<ItemSO,int> kvp in itemSo)
+        {
+            if (kvp.Value == index)
+                return kvp.Key;
+        }
+
         return null;
     }
 }

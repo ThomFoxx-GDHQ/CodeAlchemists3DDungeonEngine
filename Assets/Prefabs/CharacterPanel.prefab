@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1199482179442282968}
   - component: {fileID: 4003964550006405366}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Inventory Panel Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2491,6 +2491,7 @@ MonoBehaviour:
     _wisdom: 10
     _currentHealth: 75
     _currentMagic: 50
+  _inventoryButton: {fileID: 4003964550006405366}
 --- !u!1 &7043673934541378922
 GameObject:
   m_ObjectHideFlags: 0

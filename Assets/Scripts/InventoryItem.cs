@@ -9,10 +9,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] RectTransform _canvas;
     Transform _originalParent;
     InventorySlot _target;
+    ItemSO _itemInfo;
+    Image _image;
+
+
 
     private void Start()
     {
         _draggingIcon = this.gameObject;
+        _image = GetComponent<Image>();        
+    }
+
+    public void Initialization(ItemSO item)
+    {
+        _itemInfo = item;
+        _image.sprite = _itemInfo.icon;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

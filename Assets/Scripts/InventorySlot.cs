@@ -9,6 +9,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     [SerializeField] bool _isPanel;
 
     public bool IsEmpty => _isEmpty;
+    public bool IsPanel => _isPanel;
 
     public void UpdateSlot(GameObject item)
     {

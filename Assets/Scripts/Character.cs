@@ -67,8 +67,6 @@ public class Character
         this._portraitID = portraitID;
     }
    
-
-
     /// <summary>
     /// Creates a Generic Character with Random Stats
     /// </summary>
@@ -109,5 +107,12 @@ public class Character
 
         return true;
     }
-               
+       
+    public ItemStruct GetInventoryInfo(Vector2Int position)
+    {
+        return _inventory[position.x, position.y];
+    }
+
+    public ItemStruct[,] GetInventory()
+    { return _inventory; }
 }

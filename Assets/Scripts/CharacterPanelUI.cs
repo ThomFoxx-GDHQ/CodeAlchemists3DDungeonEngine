@@ -26,6 +26,9 @@ public class CharacterPanelUI : MonoBehaviour
 
     [SerializeField] private Character _character;
 
+    [SerializeField] private Button _inventoryButton;
+    private GameObject _inventoryPanel;
+
     public void AddCharacter(Character character)
     {
         _character = character;
@@ -63,5 +66,9 @@ public class CharacterPanelUI : MonoBehaviour
         _radarComponent.SetStat(Stats.Fortitude, _character.Fortitude);
         _radarComponent.SetStat(Stats.Wisdom, _character.Wisdom);
         _radarComponent.SetStat(Stats.Constitution, _character.Constitution);
+
+        _inventoryButton.onClick.RemoveAllListeners();
+        _inventoryPanel = InventoryManager.Instance.InventortyPanel;
+        _inventoryButton.onClick.AddListener(() => _inventoryPanel.SetActive(true));
     }
 }
