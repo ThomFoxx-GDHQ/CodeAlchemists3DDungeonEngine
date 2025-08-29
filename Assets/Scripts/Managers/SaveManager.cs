@@ -43,6 +43,7 @@ public class SaveManager : MonoSingleton<SaveManager>
         CharacterManager.Instance.ReloadMasterList(list.masterList);
     }
 
+    [ContextMenu("Force Save")]
     public void SaveData()
     {
         Debug.Log($"Path: {_masterListPath}");

@@ -69,6 +69,16 @@ public class CharacterPanelUI : MonoBehaviour
 
         _inventoryButton.onClick.RemoveAllListeners();
         _inventoryPanel = InventoryManager.Instance.InventortyPanel;
-        _inventoryButton.onClick.AddListener(() => _inventoryPanel.SetActive(true));
+        _inventoryButton.onClick.AddListener(() => 
+            {
+                _inventoryPanel.SetActive(true);
+                InventoryManager.Instance.SetCharacter(_character);
+            });
+    }
+
+    [ContextMenu("Test Apple")]
+    public void AddTestApple()
+    {
+        _character.TestAdd();
     }
 }

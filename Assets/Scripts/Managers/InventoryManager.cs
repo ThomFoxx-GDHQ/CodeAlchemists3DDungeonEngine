@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InventoryManager : MonoSingleton<InventoryManager>
@@ -40,11 +41,19 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         {
             for (int c = 0; c < items.GetLength(1); c++)
             {
-                if (count >= _slots.Count) return;
+                if (count >= _slots.Count)
+                {
+                    Debug.Log($"Count is Greater than Slots: {count} > {_slots.Count}");
+                    return;
+                }
+
+                if (items[r, c] == null)
+                    continue;
 
                 ItemSO itemSO = ItemManager.RequestItem(items[r, c].ID);
                 if (itemSO != null)
                 {
+                    Debug.Log("Instantiate Item in UI");
                     InventoryItem go = Instantiate(_inventoryItem, _inventoryPanel.transform).GetComponent<InventoryItem>();
                     go.Initialization(itemSO);
                     _slots[count].UpdateSlot(go.gameObject);
@@ -52,6 +61,11 @@ public class InventoryManager : MonoSingleton<InventoryManager>
                 count++;
             }
         }
+    }
 
+    public void ClearPanel()
+    {
+        foreach (InventorySlot slot in _slots)
+            slot.UpdateSlot(null);
     }
 }

@@ -16,14 +16,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Start()
     {
+        _canvas = InventoryManager.Instance.InventortyPanel.transform.parent.GetComponent<RectTransform>();
         _draggingIcon = this.gameObject;
-        _image = GetComponent<Image>();        
+        _image = GetComponent<Image>();
+
+        if (_image == null) Debug.Log("_image is Null");
+        if (_itemInfo == null) Debug.Log("_itemInfo is Null");
+        if (_image.sprite == null) Debug.Log("_image.sprite is Null");
+        if (_itemInfo.icon == null) Debug.Log("_itemInfo.icon is Null");
+
+        _image.sprite = _itemInfo.icon;
     }
 
     public void Initialization(ItemSO item)
     {
         _itemInfo = item;
-        _image.sprite = _itemInfo.icon;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

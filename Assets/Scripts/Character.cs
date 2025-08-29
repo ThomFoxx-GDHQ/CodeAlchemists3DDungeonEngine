@@ -20,7 +20,7 @@ public class Character
     [SerializeField] private int _currentHealth;
     [SerializeField] private int _currentMagic;
 
-    [SerializeField] private ItemStruct[,] _inventory = new ItemStruct[8,4];
+    private ItemStruct[,] _inventory = new ItemStruct[8,4];
 
     public string Name => name;
     public RaceType Race => _race;
@@ -106,6 +106,14 @@ public class Character
         else if (_inventory[position.x, position.y].ID != 0) return false;
 
         return true;
+    }
+
+    public void TestAdd()
+    {
+        ItemStruct testApple = new ItemStruct(1, 1);
+        if (_inventory == null) Debug.Log("Inventory slot is Null");
+        if (testApple == null) Debug.Log("Test Apple is Null");
+        _inventory[0,0] = testApple;
     }
        
     public ItemStruct GetInventoryInfo(Vector2Int position)

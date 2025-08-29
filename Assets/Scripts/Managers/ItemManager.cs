@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ItemManager 
 {
@@ -83,9 +84,13 @@ public class ItemManager
         foreach (KeyValuePair<ItemSO,int> kvp in itemSo)
         {
             if (kvp.Value == index)
+            {
+                Debug.Log("Returning Requested Item");
                 return kvp.Key;
+            }
         }
 
+        Debug.Log("Returning Null on Request Item");
         return null;
     }
 }

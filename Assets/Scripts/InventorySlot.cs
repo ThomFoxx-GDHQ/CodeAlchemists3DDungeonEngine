@@ -17,6 +17,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         {
             transform.GetChild(0).gameObject.SetActive(true);
             _isEmpty = true;
+            if (transform.childCount > 1)
+            {
+                for (int i = transform.childCount -1;  i > 0; i--) 
+                    Destroy(transform.GetChild(i).gameObject);
+            }
             return;
         }
         Debug.Log("Update Slot is Called");
