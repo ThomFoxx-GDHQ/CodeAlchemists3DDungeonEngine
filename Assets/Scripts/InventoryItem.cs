@@ -11,8 +11,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     InventorySlot _target;
     ItemSO _itemInfo;
     Image _image;
+    int _slotIndex;
 
-
+    public int SlotIndex => _slotIndex;
 
     private void Start()
     {
@@ -41,7 +42,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         _draggingIcon.transform.SetParent(_canvas, false);
         _draggingIcon.transform.SetAsLastSibling();
-        _originalParent.GetComponent<InventorySlot>().UpdateSlot(null);
+        //InventorySlot invSlot = _originalParent.GetComponent<InventorySlot>();
+        slot.UpdateSlot(null);
+        _slotIndex = slot.SlotIndex;
         _draggingIcon.GetComponent<Image>().raycastTarget = false;
     }
 

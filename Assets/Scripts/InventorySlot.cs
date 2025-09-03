@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,9 +8,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     bool _isEmpty = true;
     [SerializeField] GameObject _emptySlotImage;
     [SerializeField] bool _isPanel;
+    [SerializeField] int _slotIndex;
 
     public bool IsEmpty => _isEmpty;
     public bool IsPanel => _isPanel;
+    public int SlotIndex => _slotIndex;
 
     public void UpdateSlot(GameObject item)
     {
@@ -32,6 +35,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             item.transform.SetAsLastSibling();
             item.transform.localPosition = Vector3.zero;
             item.GetComponent<Image>().raycastTarget = true;
+            //update the inventory with new location.
+            InventoryManager.Instance.MoveItems(item.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
             _isEmpty = false;
         }
         else

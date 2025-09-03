@@ -20,7 +20,7 @@ public class Character
     [SerializeField] private int _currentHealth;
     [SerializeField] private int _currentMagic;
 
-    private ItemStruct[,] _inventory = new ItemStruct[8,4];
+    private ItemStruct[,] _inventory = new ItemStruct[4,8];
 
     public string Name => name;
     public RaceType Race => _race;
@@ -35,7 +35,8 @@ public class Character
     public int CurrentHealth => _currentHealth;
     public int CurrentMagic => _currentMagic;
     public int PortraitID => _portraitID;
-
+    public int InventoryWidth => _inventory.GetLength(1);
+    public int InventoryHeight => _inventory.GetLength(0);
 
     /// <summary>
     /// Constructor for creating a new Character from existed or created data
@@ -106,6 +107,33 @@ public class Character
         else if (_inventory[position.x, position.y].ID != 0) return false;
 
         return true;
+    }
+
+    public void MoveInventoryItems(Vector2Int originalPOS, Vector2Int targetPOS)
+    {
+        Debug.Log($"Origin: {originalPOS}  & Target: {targetPOS}");
+
+        if (_inventory[targetPOS.x,targetPOS.y] == null)
+        {
+            Debug.Log("Dropping into Empty Slot");
+            ItemStruct temp = _inventory[originalPOS.x, originalPOS.y];
+            _inventory[targetPOS.x, targetPOS.y] = temp;
+            _inventory[originalPOS.x, originalPOS.y] = null;
+
+        }
+        else if(_inventory[targetPOS.x, targetPOS.y].ID == _inventory[originalPOS.x, originalPOS.y].ID)
+        {
+            Debug.Log("Adding to items in Slot");
+            _inventory[targetPOS.x, targetPOS.y].Quantity += _inventory[originalPOS.x, originalPOS.y].Quantity;
+            _inventory[originalPOS.x, originalPOS.y] = null;
+        }
+        else
+        {
+            Debug.Log("Switching Items in Slot");
+            ItemStruct temp = _inventory[targetPOS.x, targetPOS.y];
+            _inventory[targetPOS.x, targetPOS.y] = _inventory[originalPOS.x, originalPOS.y];
+            _inventory[originalPOS.x, originalPOS.y] = temp;
+        }
     }
 
     public void TestAdd()
