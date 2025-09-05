@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
@@ -9,10 +10,16 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     [SerializeField] GameObject _emptySlotImage;
     [SerializeField] bool _isPanel;
     [SerializeField] int _slotIndex;
+    TMP_Text _countText;
 
     public bool IsEmpty => _isEmpty;
     public bool IsPanel => _isPanel;
     public int SlotIndex => _slotIndex;
+
+    private void Start()
+    {
+        _countText = GetComponentInChildren<TMP_Text>();
+    }
 
     public void UpdateSlot(GameObject item)
     {
@@ -22,8 +29,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             _isEmpty = true;
             if (transform.childCount > 1)
             {
-                for (int i = transform.childCount -1;  i > 0; i--) 
-                    Destroy(transform.GetChild(i).gameObject);
+                for (int i = transform.childCount -1;  i > 0; i--)
+                {
+                    if (transform.GetChild(i).gameObject != _countText.gameObject)
+                        Destroy(transform.GetChild(i).gameObject);
+                }    
             }
             return;
         }
@@ -36,8 +46,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             item.transform.localPosition = Vector3.zero;
             item.GetComponent<Image>().raycastTarget = true;
             //update the inventory with new location.
-            InventoryManager.Instance.MoveItems(item.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
+            item.GetComponent<InventoryItem>().UpdateSlotIndex(_slotIndex);
             _isEmpty = false;
+            int itemCount = InventoryManager.Instance.ItemCount(_slotIndex);
+            if (itemCount > 1)
+            {
+                _countText.gameObject.SetActive(true);
+                _countText.SetText("{0}", itemCount);
+            }
+            else _countText.gameObject.SetActive(false);
         }
         else
         {
@@ -57,7 +74,10 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
 
         if (_isEmpty)
+        {
+            InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
             UpdateSlot(dropped);
+        }
         else
         {
             dropped.GetComponent<InventoryItem>().ReturnToSender();

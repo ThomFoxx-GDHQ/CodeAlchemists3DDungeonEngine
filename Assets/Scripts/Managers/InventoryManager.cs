@@ -51,7 +51,10 @@ public class InventoryManager : MonoSingleton<InventoryManager>
                 }
 
                 if (items[r, c] == null)
+                {
+                    count++;
                     continue;
+                }
 
                 ItemSO itemSO = ItemManager.RequestItem(items[r, c].ID);
                 if (itemSO != null)
@@ -60,6 +63,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
                     InventoryItem go = Instantiate(_inventoryItem, _inventoryPanel.transform).GetComponent<InventoryItem>();
                     go.Initialization(itemSO);
                     _slots[count].UpdateSlot(go.gameObject);
+                    Debug.Log($"Current Count:{count}");
                 }
                 count++;
             }
@@ -83,5 +87,10 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         int y = index % _character.InventoryWidth;
         Debug.Log($"{index} => {x}/{y}");
         return new Vector2Int(x, y);
+    }
+
+    public int ItemCount(int slot)
+    {
+        return _character.GetInventoryInfo(SlotConverter(slot)).Quantity;
     }
 }

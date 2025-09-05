@@ -111,8 +111,6 @@ public class Character
 
     public void MoveInventoryItems(Vector2Int originalPOS, Vector2Int targetPOS)
     {
-        Debug.Log($"Origin: {originalPOS}  & Target: {targetPOS}");
-
         if (_inventory[targetPOS.x,targetPOS.y] == null)
         {
             Debug.Log("Dropping into Empty Slot");

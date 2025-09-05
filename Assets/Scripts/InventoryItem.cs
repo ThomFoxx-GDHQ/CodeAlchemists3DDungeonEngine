@@ -72,4 +72,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         _draggingIcon.GetComponent<Image>().raycastTarget = true;
     }
+
+    public void UpdateSlotIndex(int id)
+    {
+
+        _slotIndex = id;
+    }
 }
