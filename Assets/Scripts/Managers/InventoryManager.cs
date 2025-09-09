@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using System.Linq;
 
@@ -15,12 +14,12 @@ public class InventoryManager : MonoSingleton<InventoryManager>
     public override void Init()
     {
         InventorySlot[] inventory = GameObject.FindObjectsByType<InventorySlot>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        for (int i = 0; i < inventory.Length; i++)
+        foreach (var slot in inventory)
         {
-            if (inventory[i].IsPanel)
-                _inventoryPanel = inventory[i].gameObject;
+            if (slot.IsPanel)
+                _inventoryPanel = slot.gameObject;
             else
-                _slots.Add(inventory[i]);
+                _slots.Add(slot);
         }
         _slots = _slots.OrderBy(x => x.SlotIndex).ToList();
     }
@@ -37,7 +36,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         int count = 0;
 
         Debug.Log($"Load Panel: Count{count}, {items.GetLength(1)}/{items.GetLength(0)}");
-
+      
         for (int r = 0; r < items.GetLength(0); r++)
         {
             Debug.Log($"Row: {r}");
@@ -70,18 +69,15 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         }
     }
 
-    public void ClearPanel()
+    public void ClearPanel() => _slots.ForEach(s => s.UpdateSlot(null));
+    
+
+    public MoveType MoveItems(int originalIndex, int targetIndex)
     {
-        foreach (InventorySlot slot in _slots)
-            slot.UpdateSlot(null);
+        return _character.MoveInventoryItems(SlotConverter(originalIndex), SlotConverter(targetIndex));
     }
 
-    public void MoveItems(int originalIndex, int targetIndex)
-    {
-        _character.MoveInventoryItems(SlotConverter(originalIndex), SlotConverter(targetIndex));
-    }
-
-    private Vector2Int SlotConverter(int index)
+    public Vector2Int SlotConverter(int index)
     {
         int x = index / _character.InventoryWidth;
         int y = index % _character.InventoryWidth;

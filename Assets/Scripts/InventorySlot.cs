@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,42 +24,51 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (item == null)
         {
-            transform.GetChild(0).gameObject.SetActive(true);
-            _isEmpty = true;
-            if (transform.childCount > 1)
+            SetChildren(false);
+
+            if (transform.childCount <= 1) return;
+            
+            for (int i = transform.childCount -1;  i > 0; i--)
             {
-                for (int i = transform.childCount -1;  i > 0; i--)
-                {
-                    if (transform.GetChild(i).gameObject != _countText.gameObject)
-                        Destroy(transform.GetChild(i).gameObject);
-                }    
+                if (transform.GetChild(i).gameObject != _countText.gameObject)
+                    Destroy(transform.GetChild(i).gameObject);
             }
             return;
         }
         Debug.Log("Update Slot is Called");
         if (transform.childCount > 0)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            SetChildren(true);
+
             item.transform.SetParent(transform, false);
             item.transform.SetAsLastSibling();
             item.transform.localPosition = Vector3.zero;
             item.GetComponent<Image>().raycastTarget = true;
             //update the inventory with new location.
             item.GetComponent<InventoryItem>().UpdateSlotIndex(_slotIndex);
-            _isEmpty = false;
+            //_isEmpty = false;
             int itemCount = InventoryManager.Instance.ItemCount(_slotIndex);
-            if (itemCount > 1)
+            if (itemCount >= 1)
             {
                 _countText.gameObject.SetActive(true);
                 _countText.SetText("{0}", itemCount);
             }
-            else _countText.gameObject.SetActive(false);
+            else
+            {
+                _countText.gameObject.SetActive(false);
+            }
         }
         else
         {
-            transform.GetChild(0).gameObject.SetActive(true);
-            _isEmpty = true;
+            SetChildren(false);
         }
+    }
+
+    private void SetChildren(bool hasItem)
+    {
+        transform.GetChild(0).gameObject.SetActive(!hasItem);
+        _countText.gameObject.SetActive(hasItem);
+        _isEmpty = !hasItem;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -73,15 +81,27 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             return;
         }
 
-        if (_isEmpty)
+        var moveType = InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
+
+        switch (moveType)
         {
-            InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
-            UpdateSlot(dropped);
+            case MoveType.SamePos:
+                return;
+            case MoveType.EmptySlot or MoveType.AddingSlot:
+                //UpdateSlot(dropped); 
+                break;
+            case MoveType.SwappingSlot:
+                var currentItem = GetComponentInChildren<InventoryItem>();
+                var droppedItem = dropped.GetComponent<InventoryItem>();
+                var slot = droppedItem.OriginalParent.GetComponent<InventorySlot>();
+                currentItem.SentToSender(droppedItem.OriginalParent);
+                slot.UpdateSlot(currentItem.gameObject);
+                
+                Debug.Log("swapping?");
+                //UpdateSlot(dropped);
+                break;
         }
-        else
-        {
-            dropped.GetComponent<InventoryItem>().ReturnToSender();
-        }
+        UpdateSlot(dropped); 
     }
 
 }

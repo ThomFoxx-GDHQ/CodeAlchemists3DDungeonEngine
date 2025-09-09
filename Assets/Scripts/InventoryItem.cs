@@ -14,6 +14,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     int _slotIndex;
 
     public int SlotIndex => _slotIndex;
+    public Transform OriginalParent => _originalParent;
 
     private void Start()
     {
@@ -36,13 +37,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (_draggingIcon.transform.parent.TryGetComponent<InventorySlot>(out InventorySlot slot))
+        if (_draggingIcon.transform.parent.TryGetComponent(out InventorySlot slot))
         {
             _originalParent = _draggingIcon.transform.parent;
         }
         _draggingIcon.transform.SetParent(_canvas, false);
         _draggingIcon.transform.SetAsLastSibling();
-        //InventorySlot invSlot = _originalParent.GetComponent<InventorySlot>();
         slot.UpdateSlot(null);
         _slotIndex = slot.SlotIndex;
         _draggingIcon.GetComponent<Image>().raycastTarget = false;
@@ -68,6 +68,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         _draggingIcon.transform.localPosition = Vector3.zero;        
     }
 
+    public void SentToSender(Transform parent)
+    {
+        _draggingIcon.transform.SetParent(parent);
+        _draggingIcon.GetComponent<Image>().raycastTarget = true;
+        _draggingIcon.transform.SetAsLastSibling();
+        _draggingIcon.transform.localPosition = Vector3.zero;
+    }
+
     public void OnEndDrag(PointerEventData eventData)
     {
         _draggingIcon.GetComponent<Image>().raycastTarget = true;
@@ -75,7 +83,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void UpdateSlotIndex(int id)
     {
-
         _slotIndex = id;
     }
 }
