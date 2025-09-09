@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -22,6 +22,9 @@ public class Character
 
     private ItemStruct[,] _inventory = new ItemStruct[4,8];
 
+    [SerializeField] private List<ItemStruct> FullList;
+    
+    
     public string Name => name;
     public RaceType Race => _race;
     public ClassType JobType => _jobType;
@@ -89,8 +92,10 @@ public class Character
     
     public void TakeDamage(int damageAmount)
     {
-        if (damageAmount >0)
+        if (damageAmount > 0)
+        {
             _currentHealth -= damageAmount;
+        }
     }
 
     public bool AddToInventory(Item item, int amount, Vector2Int position)
@@ -108,30 +113,38 @@ public class Character
 
         return true;
     }
-
-    public void MoveInventoryItems(Vector2Int originalPOS, Vector2Int targetPOS)
+    
+    public MoveType MoveInventoryItems(Vector2Int originalPOS, Vector2Int targetPOS)
     {
-        if (_inventory[targetPOS.x,targetPOS.y] == null)
+        Debug.Log($"Origin: {originalPOS}  & Target: {targetPOS}");
+
+        if (targetPOS == originalPOS)
+        {
+            return MoveType.SamePos;
+        }
+        
+        if (_inventory[targetPOS.x,targetPOS.y] == null || _inventory[targetPOS.x,targetPOS.y].ID == 0)
         {
             Debug.Log("Dropping into Empty Slot");
-            ItemStruct temp = _inventory[originalPOS.x, originalPOS.y];
-            _inventory[targetPOS.x, targetPOS.y] = temp;
+            _inventory[targetPOS.x, targetPOS.y] = _inventory[originalPOS.x, originalPOS.y];
             _inventory[originalPOS.x, originalPOS.y] = null;
-
+            return MoveType.EmptySlot;
         }
-        else if(_inventory[targetPOS.x, targetPOS.y].ID == _inventory[originalPOS.x, originalPOS.y].ID)
+        
+        if (_inventory[targetPOS.x, targetPOS.y].ID == _inventory[originalPOS.x, originalPOS.y].ID)
         {
             Debug.Log("Adding to items in Slot");
             _inventory[targetPOS.x, targetPOS.y].Quantity += _inventory[originalPOS.x, originalPOS.y].Quantity;
             _inventory[originalPOS.x, originalPOS.y] = null;
+            return MoveType.AddingSlot;
         }
-        else
-        {
-            Debug.Log("Switching Items in Slot");
-            ItemStruct temp = _inventory[targetPOS.x, targetPOS.y];
-            _inventory[targetPOS.x, targetPOS.y] = _inventory[originalPOS.x, originalPOS.y];
-            _inventory[originalPOS.x, originalPOS.y] = temp;
-        }
+
+        Debug.Log("Switching Items in Slot");
+        ItemStruct temp = _inventory[targetPOS.x, targetPOS.y];
+        _inventory[targetPOS.x, targetPOS.y] = _inventory[originalPOS.x, originalPOS.y];
+        _inventory[originalPOS.x, originalPOS.y] = temp;
+        return MoveType.SwappingSlot;
+        
     }
 
     public void TestAdd()
@@ -142,11 +155,39 @@ public class Character
         _inventory[0,0] = testApple;
     }
        
-    public ItemStruct GetInventoryInfo(Vector2Int position)
+    public ItemStruct GetInventoryInfo(Vector2Int position) => _inventory[position.x, position.y];
+    public ItemStruct[,] GetInventory() => _inventory;
+
+    public void LoadInventory()
     {
-        return _inventory[position.x, position.y];
+        _inventory ??= new ItemStruct[4, 8];
+
+        for (int i = 0; i < FullList.Count; i++)
+        {
+            var index = InventoryManager.Instance.SlotConverter(i);
+            _inventory[index.x, index.y] = FullList[i];
+        }
+        
+        
     }
 
-    public ItemStruct[,] GetInventory()
-    { return _inventory; }
+    public void SaveInventory()
+    {
+        FullList = new List<ItemStruct>();
+        for (int i = 0; i < InventoryHeight; i++)
+        {
+            for (int j = 0; j < InventoryWidth; j++)
+            {
+                FullList.Add(_inventory[i,j]);
+            }
+        }
+    }
+}
+
+public enum MoveType
+{
+    SamePos,
+    EmptySlot,
+    AddingSlot,
+    SwappingSlot,
 }

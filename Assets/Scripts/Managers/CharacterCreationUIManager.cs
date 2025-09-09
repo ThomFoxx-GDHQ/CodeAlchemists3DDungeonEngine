@@ -89,41 +89,45 @@ public class CharacterCreationUIManager : MonoBehaviour
                 if (_strength >= 20) return;
                 _strength++;
                 _strengthField.text = _strength.ToString();
-                _pointsTotal--;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Agility":
                 if (_agility >= 20) return;
                 _agility++;
                 _agilityField.text = _agility.ToString();
-                _pointsTotal--;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Constitution":
                 if (_constitution >= 20) return;
                 _constitution++;
                 _constitutionField.text = _constitution.ToString();
-                _pointsTotal--;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Fortitude":
                 if (_fortitude >= 20) return;
                 _fortitude++;
                 _fortitudeField.text = _fortitude.ToString();
-                _pointsTotal--;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Wisdom":
                 if (_wisdom >= 20) return;
                 _wisdom++;
                 _wisdomField.text = _wisdom.ToString();
-                _pointsTotal--;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             default:
                 Debug.LogError("You Misspelled the Stat.");
-                break;
+                return;
         }
+        UsePoints(true);
+    }
+
+    private void UsePoints(bool usePoints)
+    {
+        if (usePoints)
+        {
+            _pointsTotal--;
+        }
+        else
+        {
+            _pointsTotal++;
+        }
+        _pointsText.SetText("{0}", _pointsTotal);
     }
 
     public void RemoveFromStat(string stat)
@@ -136,41 +140,32 @@ public class CharacterCreationUIManager : MonoBehaviour
                 if (_strength <= 10) return;
                 _strength--;
                 _strengthField.text = _strength.ToString();
-                _pointsTotal++;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Agility":
                 if (_agility <= 10) return;
                 _agility--;
                 _agilityField.text = _agility.ToString();
-                _pointsTotal++;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Constitution":
                 if (_constitution <= 10) return;
                 _constitution--;
                 _constitutionField.text = _constitution.ToString();
-                _pointsTotal++;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Fortitude":
                 if (_fortitude <= 10) return;
                 _fortitude--;
                 _fortitudeField.text = _fortitude.ToString();
-                _pointsTotal++;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             case "Wisdom":
                 if (_wisdom <= 10) return;
                 _wisdom--;
                 _wisdomField.text = _wisdom.ToString();
-                _pointsTotal++;
-                _pointsText.text = _pointsTotal.ToString();
                 break;
             default:
                 Debug.LogError("You Misspelled the Stat.");
-                break;
+                return;
         }
+        UsePoints(false);
     }
 
     public void BuildCharacter()

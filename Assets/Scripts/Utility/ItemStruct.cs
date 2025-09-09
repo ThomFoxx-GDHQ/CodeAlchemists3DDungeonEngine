@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class ItemStruct 
 {
-    private int _id;
-    private int _quantity;
+    [SerializeField] private int _id;
+    [SerializeField] private int _quantity;
 
     public int ID => _id;
     public int Quantity

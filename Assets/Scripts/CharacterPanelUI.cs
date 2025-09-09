@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CharacterPanelUI : MonoBehaviour
@@ -80,5 +81,13 @@ public class CharacterPanelUI : MonoBehaviour
     public void AddTestApple()
     {
         _character.TestAdd();
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            AddTestApple();
+        }
     }
 }
