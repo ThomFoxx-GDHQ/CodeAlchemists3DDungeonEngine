@@ -40,6 +40,12 @@ public class CharacterManager : MonoSingleton<CharacterManager>
         SaveManager.Instance.CharacterListToJson(_masterCharacterList);
     }
 
+    [ContextMenu("saveMasterList")]
+    private void SaveMasterListCharacters()
+    {
+        SaveManager.Instance.CharacterListToJson(_masterCharacterList);
+    }
+
     public void ReloadMasterList(List<Character> characterList)
     {
         _masterCharacterList = characterList;

@@ -66,11 +66,7 @@ public class PartyController : MonoBehaviour
         }
         StartCoroutine(MoveRoutine(_moveDirection));
     }
-
-    private void Update()
-    {
-
-    }
+    
 
     IEnumerator MoveRoutine(Vector3 direction)
     {

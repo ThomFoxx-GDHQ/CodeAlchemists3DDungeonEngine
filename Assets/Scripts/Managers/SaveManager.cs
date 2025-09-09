@@ -27,6 +27,10 @@ public class SaveManager : MonoSingleton<SaveManager>
     public void CharacterListToJson(List<Character> list)
     {
         MasterCharacterList serializedList = new MasterCharacterList();
+        /*foreach (var character in list)
+        {
+            character.SaveInventory();
+        }*/
         serializedList.masterList = list;
 
         _jsonString = JsonUtility.ToJson(serializedList);
@@ -40,6 +44,10 @@ public class SaveManager : MonoSingleton<SaveManager>
         file = Cipher.EncryptDecrypt(file, _encryptKey);
 
         list = JsonUtility.FromJson<MasterCharacterList>(file);
+        /*foreach (var character in list.masterList)
+        {
+            character.LoadInventory();
+        }*/
         CharacterManager.Instance.ReloadMasterList(list.masterList);
     }
 
