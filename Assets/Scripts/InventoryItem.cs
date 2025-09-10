@@ -37,15 +37,19 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _draggingIcon.GetComponent<Image>().raycastTarget = false;
         if (_draggingIcon.transform.parent.TryGetComponent(out InventorySlot slot))
         {
             _originalParent = _draggingIcon.transform.parent;
+        }
+        else
+        {
+            slot = _originalParent.GetComponent<InventorySlot>();
         }
         _draggingIcon.transform.SetParent(_canvas, false);
         _draggingIcon.transform.SetAsLastSibling();
         slot.UpdateSlot(null);
         _slotIndex = slot.SlotIndex;
-        _draggingIcon.GetComponent<Image>().raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -63,21 +67,26 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         Debug.Log("Return to Sender Called");
         _draggingIcon.transform.SetParent(_originalParent);
-        _draggingIcon.GetComponent<Image>().raycastTarget = true;
+        _originalParent.GetComponent<InventorySlot>().UpdateSlot(this.gameObject);
         _draggingIcon.transform.SetAsLastSibling();
         _draggingIcon.transform.localPosition = Vector3.zero;        
+        _draggingIcon.GetComponent<Image>().raycastTarget = true;
     }
 
     public void SentToSender(Transform parent)
     {
         _draggingIcon.transform.SetParent(parent);
-        _draggingIcon.GetComponent<Image>().raycastTarget = true;
         _draggingIcon.transform.SetAsLastSibling();
         _draggingIcon.transform.localPosition = Vector3.zero;
+        _draggingIcon.GetComponent<Image>().raycastTarget = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log(eventData.pointerCurrentRaycast, eventData.pointerCurrentRaycast.gameObject);
+        if (eventData.pointerCurrentRaycast.gameObject == null)
+            ReturnToSender();
+
         _draggingIcon.GetComponent<Image>().raycastTarget = true;
     }
 

@@ -86,6 +86,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         switch (moveType)
         {
             case MoveType.SamePos:
+                dropped.GetComponent<InventoryItem>().ReturnToSender();
                 return;
             case MoveType.EmptySlot or MoveType.AddingSlot:
                 //UpdateSlot(dropped); 

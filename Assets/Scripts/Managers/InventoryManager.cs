@@ -34,8 +34,9 @@ public class InventoryManager : MonoSingleton<InventoryManager>
     private void LoadInventoryPanel(ItemStruct[,] items)
     {
         int count = 0;
-
-        Debug.Log($"Load Panel: Count{count}, {items.GetLength(1)}/{items.GetLength(0)}");
+        
+        if (items != null) 
+            Debug.Log($"Load Panel: Count{count}, {items.GetLength(1)}/{items.GetLength(0)}");
       
         for (int r = 0; r < items.GetLength(0); r++)
         {
