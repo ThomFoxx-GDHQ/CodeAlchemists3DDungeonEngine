@@ -15,13 +15,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public bool IsPanel => _isPanel;
     public int SlotIndex => _slotIndex;
 
-    private void Start()
+    private void Awake()
     {
+        if (_isPanel) return;
+        
         _countText = GetComponentInChildren<TMP_Text>();
+        SetChildren(false);
     }
 
     public void UpdateSlot(GameObject item)
     {
+        if (_isPanel) return;
+        
         if (item == null)
         {
             SetChildren(false);
@@ -46,7 +51,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             item.GetComponent<Image>().raycastTarget = true;
             //update the inventory with new location.
             item.GetComponent<InventoryItem>().UpdateSlotIndex(_slotIndex);
-            //_isEmpty = false;
+
             int itemCount = InventoryManager.Instance.ItemCount(_slotIndex);
             if (itemCount >= 1)
             {
@@ -82,7 +87,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
 
         var moveType = InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
-
         switch (moveType)
         {
             case MoveType.SamePos:
