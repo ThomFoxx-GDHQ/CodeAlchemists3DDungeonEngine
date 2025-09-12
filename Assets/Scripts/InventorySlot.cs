@@ -19,7 +19,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         if (_isPanel) return;
         
-        _countText = GetComponentInChildren<TMP_Text>();
+        _countText = GetComponentInChildren<TMP_Text>(true);
         SetChildren(false);
     }
 

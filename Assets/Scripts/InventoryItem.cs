@@ -86,6 +86,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log(eventData.pointerCurrentRaycast, eventData.pointerCurrentRaycast.gameObject);
         if (eventData.pointerCurrentRaycast.gameObject == null)
             ReturnToSender();
+        else if (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != null)
+            Debug.Log("EndingDrag on an InventorySlot");
+        else
+        {
+            if (eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponent<InventorySlot>() == null)
+            {
+                Debug.Log($"EndingDrag on non InventorySlot object. {eventData.pointerCurrentRaycast.gameObject.ToString()}");
+                ReturnToSender();
+            }
+        }
 
         _draggingIcon.GetComponent<Image>().raycastTarget = true;
     }
