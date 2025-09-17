@@ -33,6 +33,8 @@ public class InventoryManager : MonoSingleton<InventoryManager>
 
     private void LoadInventoryPanel(ItemStruct[,] items)
     {
+        ClearPanel();
+
         int count = 0;
         
         if (items != null) 

@@ -25,3 +25,12 @@ public enum Stats
     Health,
     Magic
 }
+
+public enum MoveType
+{
+    SamePos,
+    EmptySlot,
+    AddingSlot,
+    SwappingSlot,
+    MoveToCharacter
+}

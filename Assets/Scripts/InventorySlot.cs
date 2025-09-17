@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     [SerializeField] bool _isPanel;
     [SerializeField] int _slotIndex;
     TMP_Text _countText;
+    CharacterPanelUI _characterPanel;
 
     public bool IsEmpty => _isEmpty;
     public bool IsPanel => _isPanel;
@@ -85,8 +86,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             dropped.GetComponent<InventoryItem>().ReturnToSender();
             return;
         }
+        MoveType moveType = MoveType.SamePos;
 
-        var moveType = InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
+        if (_isPanel && TryGetComponent<CharacterPanelUI>(out _characterPanel))
+        {
+            moveType = MoveType.MoveToCharacter;
+        }
+        else
+            moveType = InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
+
+        var droppedItem = dropped.GetComponent<InventoryItem>();
+        var slot = droppedItem.OriginalParent.GetComponent<InventorySlot>();
+
         switch (moveType)
         {
             case MoveType.SamePos:
@@ -96,14 +107,26 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                 //UpdateSlot(dropped); 
                 break;
             case MoveType.SwappingSlot:
-                var currentItem = GetComponentInChildren<InventoryItem>();
-                var droppedItem = dropped.GetComponent<InventoryItem>();
-                var slot = droppedItem.OriginalParent.GetComponent<InventorySlot>();
+                var currentItem = GetComponentInChildren<InventoryItem>();                
                 currentItem.SentToSender(droppedItem.OriginalParent);
                 slot.UpdateSlot(currentItem.gameObject);
                 
                 Debug.Log("swapping?");
                 //UpdateSlot(dropped);
+                break;
+            case MoveType.MoveToCharacter:
+                var item = dropped.GetComponent<InventoryItem>().Item;
+                var (isRoom, slotLocation) = _characterPanel.Character.CheckInventoryForRoom(item);
+
+                if (!isRoom)
+                {
+                    dropped.GetComponent<InventoryItem>().ReturnToSender();
+                    break;
+                }
+                //Need to Inventory info from the dropped item's orginal Character
+                //to pass on the quanity
+                
+                //_characterPanel.Character.AddToInventory(item, quanity, slotLocation);
                 break;
         }
         UpdateSlot(dropped); 

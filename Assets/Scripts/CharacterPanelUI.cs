@@ -30,6 +30,8 @@ public class CharacterPanelUI : MonoBehaviour
     [SerializeField] private Button _inventoryButton;
     private GameObject _inventoryPanel;
 
+    public Character Character => _character;
+
     public void AddCharacter(Character character)
     {
         _character = character;
@@ -42,6 +44,8 @@ public class CharacterPanelUI : MonoBehaviour
         var loadPanel = GameObject.FindFirstObjectByType<LoadCharacterPanelUI>(FindObjectsInactive.Include);
         if (loadPanel != null)
             loadPanel.PartyCheck();
+
+        _character.RemoveInventory();
 
         Destroy(this.gameObject);
     }

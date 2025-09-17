@@ -23,8 +23,7 @@ public class Character
     private ItemStruct[,] _inventory = new ItemStruct[4,8];
 
     [SerializeField] private List<ItemStruct> FullList;
-    
-    
+        
     public string Name => name;
     public RaceType Race => _race;
     public ClassType JobType => _jobType;
@@ -156,7 +155,12 @@ public class Character
     }
        
     public ItemStruct GetInventoryInfo(Vector2Int position) => _inventory[position.x, position.y];
-    public ItemStruct[,] GetInventory() => _inventory;
+
+    public ItemStruct[,] GetInventory()
+    {
+        _inventory ??= new ItemStruct[4, 8];
+        return _inventory;
+    }
 
     public void LoadInventory()
     {
@@ -167,8 +171,6 @@ public class Character
             var index = InventoryManager.Instance.SlotConverter(i);
             _inventory[index.x, index.y] = FullList[i];
         }
-        
-        
     }
 
     public void SaveInventory()
@@ -182,12 +184,30 @@ public class Character
             }
         }
     }
+
+    public void RemoveInventory()
+    {
+        _inventory = new ItemStruct[4, 8];
+    }
+
+    public (bool, Vector2Int) CheckInventoryForRoom(ItemSO item)
+    {
+        for (int r = 0; r < InventoryHeight; r++)
+            for (int c = 0; c < InventoryWidth; c++)
+            {
+                if (_inventory[r, c].ID == item.ItemId)
+                    return (true, new Vector2Int(r, c));
+            }
+        //presume no match in inventory
+        for (int r = 0; r < InventoryHeight; r++)
+            for (int c = 0; c < InventoryWidth; c++)
+            {
+                if (_inventory[r,c] == null)
+                    return (true, new Vector2Int(r,c));
+            }
+        //presume no empty slots
+        return (false, Vector2Int.zero);
+    }
 }
 
-public enum MoveType
-{
-    SamePos,
-    EmptySlot,
-    AddingSlot,
-    SwappingSlot,
-}
+

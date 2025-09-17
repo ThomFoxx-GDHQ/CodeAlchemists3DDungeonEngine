@@ -2367,6 +2367,7 @@ GameObject:
   - component: {fileID: 981812770764824150}
   - component: {fileID: 1207074000276805269}
   - component: {fileID: 713328861804542954}
+  - component: {fileID: 2972789833226706750}
   m_Layer: 5
   m_Name: CharacterPanel
   m_TagString: Untagged
@@ -2479,7 +2480,23 @@ MonoBehaviour:
     _wisdom: 10
     _currentHealth: 75
     _currentMagic: 50
+    FullList: []
   _inventoryButton: {fileID: 4003964550006405366}
+--- !u!114 &2972789833226706750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6981312523977504614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a132ee78a5f334183206873d759c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emptySlotImage: {fileID: 0}
+  _isPanel: 1
+  _slotIndex: 0
 --- !u!1 &7043673934541378922
 GameObject:
   m_ObjectHideFlags: 0

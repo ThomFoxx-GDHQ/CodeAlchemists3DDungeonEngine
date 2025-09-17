@@ -15,6 +15,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public int SlotIndex => _slotIndex;
     public Transform OriginalParent => _originalParent;
+    public ItemSO Item => _itemInfo;
 
     private void Start()
     {
