@@ -10,6 +10,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
     [SerializeField] private GameObject _inventoryItem;
 
     public GameObject InventortyPanel => _inventoryPanel;
+    public Character ActiveCharacter => _character;
 
     public override void Init()
     {
@@ -26,7 +27,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
 
     public void SetCharacter(Character character)
     {
-        Debug.Log("Set Character for Inventory");
+        //Debug.Log("Set Character for Inventory");
         _character = character;
         LoadInventoryPanel(_character.GetInventory());
     }
@@ -38,17 +39,17 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         int count = 0;
         
         if (items != null) 
-            Debug.Log($"Load Panel: Count{count}, {items.GetLength(1)}/{items.GetLength(0)}");
+            //Debug.Log($"Load Panel: Count{count}, {items.GetLength(1)}/{items.GetLength(0)}");
       
         for (int r = 0; r < items.GetLength(0); r++)
         {
-            Debug.Log($"Row: {r}");
+            //Debug.Log($"Row: {r}");
             for (int c = 0; c < items.GetLength(1); c++)
             {
-                Debug.Log($"Column: {c}");
+                //Debug.Log($"Column: {c}");
                 if (count >= _slots.Count)
                 {
-                    Debug.Log($"Count is Greater than Slots: {count} > {_slots.Count}");
+                    //Debug.Log($"Count is Greater than Slots: {count} > {_slots.Count}");
                     return;
                 }
 
@@ -61,11 +62,11 @@ public class InventoryManager : MonoSingleton<InventoryManager>
                 ItemSO itemSO = ItemManager.RequestItem(items[r, c].ID);
                 if (itemSO != null)
                 {
-                    Debug.Log("Instantiate Item in UI: ");
+                    //Debug.Log("Instantiate Item in UI: ");
                     InventoryItem go = Instantiate(_inventoryItem, _inventoryPanel.transform).GetComponent<InventoryItem>();
                     go.Initialization(itemSO);
                     _slots[count].UpdateSlot(go.gameObject);
-                    Debug.Log($"Current Count:{count}");
+                    //Debug.Log($"Current Count:{count}");
                 }
                 count++;
             }
@@ -84,7 +85,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
     {
         int x = index / _character.InventoryWidth;
         int y = index % _character.InventoryWidth;
-        Debug.Log($"{index} => {x}/{y}");
+        // Debug.Log($"{index} => {x}/{y}");
         return new Vector2Int(x, y);
     }
 

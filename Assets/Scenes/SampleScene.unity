@@ -1531,6 +1531,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 711613852377117422, guid: 09828e7b23d3a9144a23589f05662356, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000015258789
+      objectReference: {fileID: 0}
     - target: {fileID: 2377426636411706294, guid: 09828e7b23d3a9144a23589f05662356, type: 3}
       propertyPath: m_Pivot.x
       value: 0

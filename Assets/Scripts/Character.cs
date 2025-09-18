@@ -97,20 +97,42 @@ public class Character
         }
     }
 
-    public bool AddToInventory(Item item, int amount, Vector2Int position)
+    public bool AddToInventory(ItemSO item, int amount, Vector2Int position)
     {
         //check if item Matches
-        if (_inventory[position.x, position.y].ID == item.ItemID)
+        if (_inventory[position.x, position.y]?.ID == item.ItemId)
             _inventory[position.x, position.y].Quantity += amount;
 
         //Fill in Empty
         else if (_inventory[position.x, position.y] == default)
-            _inventory[position.x, position.y] = new ItemStruct(item.ItemID, amount);
+            _inventory[position.x, position.y] = new ItemStruct(item.ItemId, amount);
 
         //Check if Empty
         else if (_inventory[position.x, position.y].ID != 0) return false;
 
         return true;
+    }
+
+    public bool RemoveFromInventory(ItemSO item, int amount, Vector2Int position)
+    {
+        var actualItem = GetInventoryInfo(position);
+
+        if (item.ItemId != actualItem.ID) return false;
+
+        if (amount < actualItem.Quantity)
+        {
+            actualItem.Quantity -= amount;
+            return true;
+        }
+        if (amount > actualItem.Quantity) return false;
+        if (amount == actualItem.Quantity)
+        {
+            _inventory[position.x, position.y] = null;
+            return true;        
+        }
+
+        Debug.LogWarning("Here there be dragons.");
+        return false;
     }
     
     public MoveType MoveInventoryItems(Vector2Int originalPOS, Vector2Int targetPOS)
@@ -195,7 +217,7 @@ public class Character
         for (int r = 0; r < InventoryHeight; r++)
             for (int c = 0; c < InventoryWidth; c++)
             {
-                if (_inventory[r, c].ID == item.ItemId)
+                if (_inventory[r, c]?.ID == item.ItemId)
                     return (true, new Vector2Int(r, c));
             }
         //presume no match in inventory

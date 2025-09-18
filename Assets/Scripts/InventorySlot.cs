@@ -81,16 +81,16 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         GameObject dropped = eventData.pointerDrag;
 
-        if (_isPanel)
-        {
-            dropped.GetComponent<InventoryItem>().ReturnToSender();
-            return;
-        }
         MoveType moveType = MoveType.SamePos;
 
         if (_isPanel && TryGetComponent<CharacterPanelUI>(out _characterPanel))
         {
             moveType = MoveType.MoveToCharacter;
+        }
+        else if (_isPanel)
+        {
+            dropped.GetComponent<InventoryItem>().ReturnToSender();
+            return;
         }
         else
             moveType = InventoryManager.Instance.MoveItems(dropped.GetComponent<InventoryItem>().SlotIndex, _slotIndex);
@@ -115,18 +115,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler
                 //UpdateSlot(dropped);
                 break;
             case MoveType.MoveToCharacter:
-                var item = dropped.GetComponent<InventoryItem>().Item;
-                var (isRoom, slotLocation) = _characterPanel.Character.CheckInventoryForRoom(item);
+                var item = dropped.GetComponent<InventoryItem>();
+                var (isRoom, slotLocation) = _characterPanel.Character.CheckInventoryForRoom(item.Item);
 
                 if (!isRoom)
                 {
-                    dropped.GetComponent<InventoryItem>().ReturnToSender();
+                    item.ReturnToSender();
                     break;
                 }
-                //Need to Inventory info from the dropped item's orginal Character
-                //to pass on the quanity
+
+                var originalPOS = InventoryManager.Instance.SlotConverter(item.SlotIndex);
+                var actualItem = InventoryManager.Instance.ActiveCharacter.GetInventoryInfo(originalPOS);
                 
-                //_characterPanel.Character.AddToInventory(item, quanity, slotLocation);
+                _characterPanel.Character.AddToInventory(item.Item, actualItem.Quantity, slotLocation);
+                InventoryManager.Instance.ActiveCharacter.RemoveFromInventory(item.Item, actualItem.Quantity, originalPOS);
+
+                Destroy(dropped.gameObject);
+                dropped = null;
                 break;
         }
         UpdateSlot(dropped); 

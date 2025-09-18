@@ -30,6 +30,7 @@ public class ShortCharacterInfoUI : MonoBehaviour
         _classText.text = _character.JobType.ToString();
         _raceText.text = _character.Race.ToString();
         _portrait.sprite = PortraitManager.Instance.GetPortrait(_character.PortraitID);
+        _character.LoadInventory();
     }
 
     public void AddToParty()
