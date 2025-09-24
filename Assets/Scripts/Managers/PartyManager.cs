@@ -22,7 +22,7 @@ public class PartyManager : MonoSingleton<PartyManager>
             go.GetComponent<CharacterPanelUI>().AddCharacter(character);
             _panelList.Add(go);
         }
-        LoadListToParty();
+        LoadListToParty(_partyList);
     }
 
     public void RemovePartyMember(Character character)
@@ -32,13 +32,11 @@ public class PartyManager : MonoSingleton<PartyManager>
             int index = _partyList.IndexOf(character);
             _partyList.Remove(character);
             _panelList.RemoveAt(index);
-            LoadListToParty();
+            LoadListToParty(_partyList);
         }
     }
 
-    //For testing
-    [ContextMenu("Load List to Party")]
-    public void LoadListToParty()
+    public void LoadListToParty(List<Character> list)
     {
         int width = _party.GetLength(0);
         int height = _party.GetLength(1);
@@ -48,9 +46,14 @@ public class PartyManager : MonoSingleton<PartyManager>
             for (int x = 0; x<width; x++)
             {
                 int index = y*width + x;
-                if (index < _partyList.Count)
-                    _party[y,x] = _partyList[index];
+                if (index < list.Count)
+                    _party[y,x] = list[index];
             }
         }
+    }
+
+    public void SaveParty()
+    {
+        SaveManager.Instance.PartyListToJson( _partyList );
     }
 }
