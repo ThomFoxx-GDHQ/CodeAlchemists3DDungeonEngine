@@ -11,6 +11,7 @@ public class SaveManager : MonoSingleton<SaveManager>
     [SerializeField] string _masterListFilename;
     [SerializeField] string _partyFilename;
     [SerializeField] string _encryptKey;
+    string[] _fileSlots = new string[3];
 
     public override void Init()
     {
@@ -109,6 +110,17 @@ public class SaveManager : MonoSingleton<SaveManager>
             PartyFileToList(_jsonString);
         }
         else Debug.LogWarning("Party File Does not exist");
+    }
+
+    public void SaveParty(int index, string partyFileName)
+    {
+        if (index >= _fileSlots.Length) return;
+
+        _partyFilename = partyFileName;
+        _partyPath = Path.Combine(_path, _partyFilename + ".json");
+        _fileSlots[index] = partyFileName;
+
+        PartyListToJson(PartyManager.Instance.PartyList);
     }
 
    /* private void OnApplicationQuit()

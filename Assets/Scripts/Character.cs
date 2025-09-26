@@ -187,12 +187,12 @@ public class Character
     public void LoadInventory()
     {
         _inventory ??= new ItemStruct[4, 8];
-
-        for (int i = 0; i < FullList.Count; i++)
-        {
-            var index = InventoryManager.Instance.SlotConverter(i);
-            _inventory[index.x, index.y] = FullList[i];
-        }
+        if (FullList != null)
+            for (int i = 0; i < FullList.Count; i++)
+            {
+                var index = InventoryManager.Instance.SlotConverter(i);
+                _inventory[index.x, index.y] = FullList[i];
+            }
     }
 
     public void SaveInventory()
