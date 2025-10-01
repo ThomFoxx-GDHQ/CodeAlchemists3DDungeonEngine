@@ -26,6 +26,10 @@ public class SaveManager : MonoSingleton<SaveManager>
             CharacterFileToList(_jsonString);
         }
         else Debug.Log("File not Found");
+
+        _fileSlots[0] = PlayerPrefs.GetString("Slot1", string.Empty);
+        _fileSlots[1] = PlayerPrefs.GetString("Slot2", string.Empty);
+        _fileSlots[2] = PlayerPrefs.GetString("Slot3", string.Empty);
     }
 
     public void CharacterListToJson(List<Character> list)
@@ -102,8 +106,9 @@ public class SaveManager : MonoSingleton<SaveManager>
         File.WriteAllText(_partyPath, _jsonString);
     }
 
-    public void LoadParty()
+    public void LoadParty(int index)
     {
+        _partyPath = Path.Combine(_path, _fileSlots[index] + ".json");
         if (File.Exists(_partyPath))
         {
             _jsonString = File.ReadAllText(_partyPath);
