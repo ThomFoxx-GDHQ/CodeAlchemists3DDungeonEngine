@@ -56,4 +56,11 @@ public class PartyManager : MonoSingleton<PartyManager>
     {
         SaveManager.Instance.PartyListToJson( _partyList );
     }
+
+    public void ClearParty()
+    {
+        _partyList.Clear();
+        _panelList.Clear();
+        LoadListToParty(_partyList);
+    }
 }

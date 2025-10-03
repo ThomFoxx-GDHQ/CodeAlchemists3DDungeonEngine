@@ -30,4 +30,15 @@ public class LoadPanel : MonoBehaviour
             _activeSlotIndex = index;           
         }
     }
+
+    public void LoadParty()
+    {
+        PartyManager.Instance.ClearParty();
+        var panels = FindObjectsByType<CharacterPanelUI>(FindObjectsSortMode.None);
+        for (int i = 0; i < panels.Length; i++)
+        {
+            Destroy(panels[i].gameObject);
+        }
+        SaveManager.Instance.LoadParty(_activeSlotIndex);
+    }
 }
