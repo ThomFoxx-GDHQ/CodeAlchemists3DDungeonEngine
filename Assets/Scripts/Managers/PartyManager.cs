@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PartyManager : MonoSingleton<PartyManager>
 {
@@ -23,6 +24,25 @@ public class PartyManager : MonoSingleton<PartyManager>
             _panelList.Add(go);
         }
         LoadListToParty(_partyList);
+    }
+
+    public void RebuildPartyPanel()
+    {
+        int width = _party.GetLength(0);
+        int height = _party.GetLength(1);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (_party[x, y] != null)
+                {
+                    GameObject go = Instantiate(_characterPanelPrefab, _characterGroupPanel);
+                    go.GetComponent<CharacterPanelUI>().AddCharacter(_party[x, y]);
+                    _panelList.Add(go);
+                }
+            }
+        }
     }
 
     public void RemovePartyMember(Character character)

@@ -73,7 +73,11 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         }
     }
 
-    public void ClearPanel() => _slots.ForEach(s => s.UpdateSlot(null));
+    public void ClearPanel() 
+    {
+        if (_slots != null)
+            _slots.ForEach(s => s.UpdateSlot(null)); 
+    }
     
 
     public MoveType MoveItems(int originalIndex, int targetIndex)
