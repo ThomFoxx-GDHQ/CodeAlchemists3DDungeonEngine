@@ -34,3 +34,11 @@ public enum MoveType
     SwappingSlot,
     MoveToCharacter
 }
+
+public enum Direction
+{
+    North,
+    East,
+    South,
+    West
+}

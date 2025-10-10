@@ -67,7 +67,6 @@ public class PartyController : MonoBehaviour
         StartCoroutine(MoveRoutine(_moveDirection));
     }
     
-
     IEnumerator MoveRoutine(Vector3 direction)
     {
         _startPOS = transform.position;        
@@ -109,22 +108,28 @@ public class PartyController : MonoBehaviour
         }
 
         Vector3 rotation = transform.rotation.eulerAngles;
+        Direction rotationDirection = Direction.North;
         switch (rotation.y)
         {
             case float y when (y > 350f && y < 10f):
                 rotation.y = 0;
+                rotationDirection = Direction.North;
                 break;
             case float y when (y > 80f && y < 100f):
                 rotation.y = 90;
+                rotationDirection = Direction.East;
                 break;
             case float y when (y > 170f && y < 190f):
                 rotation.y = 180;
+                rotationDirection = Direction.South;
                 break;
             case float y when (y > 260f && y < 280f):
                 rotation.y = 270;
+                rotationDirection = Direction.West;
                 break;
         }
         transform.rotation = Quaternion.Euler(rotation);
+        UIManager.Instance.UpdateCompass(rotationDirection);
     }
 
     private void OnTriggerEnter(Collider other)

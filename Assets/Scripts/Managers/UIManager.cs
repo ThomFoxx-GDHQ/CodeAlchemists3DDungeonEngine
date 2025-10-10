@@ -3,12 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] GameObject _mainPanel;
     [SerializeField] GameObject _mainMenuPanel;
     [SerializeField] GameObject _partyMenuPanel;
     [SerializeField] GameObject _inventoryPanel;
+    [SerializeField] GameObject _compass;
+
+    CompassBehavior _compassBehavior;
 
     [SerializeField] InputActionReference _mainMenuAction;
     [SerializeField] InputActionReference _selectMenuAction;
@@ -21,6 +24,8 @@ public class UIManager : MonoBehaviour
         {
             _mainPanel.transform.GetChild(i).gameObject.SetActive(false);
         }
+
+        _compassBehavior = _compass.GetComponentInChildren<CompassBehavior>();
     }
 
     private void OnEnable()
@@ -43,5 +48,10 @@ public class UIManager : MonoBehaviour
     {
         _mainMenuPanel.SetActive(!_mainMenuPanel.activeInHierarchy);
         _isMainMenuOpen = _mainMenuPanel.activeInHierarchy;
+    }
+
+    public void UpdateCompass(Direction direction)
+    {
+        _compassBehavior.SetDirection(direction);
     }
 }
