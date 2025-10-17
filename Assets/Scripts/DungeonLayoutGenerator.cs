@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class DungeonLayoutGenerator : MonoBehaviour
 {
@@ -28,8 +29,12 @@ public class DungeonLayoutGenerator : MonoBehaviour
     private System.Random _rng;
     private char[,] _grid; // 'R' is Room, 'C' is Corridor, '\0' is Empty
 
-    private readonly List<Room> _rooms = new List<Room>();
-    
+    private List<Room> _rooms = new List<Room>();
+
+    // == Debugging ==
+    private int _roomTileCount = 0;
+    private int _corridorTileCount = 0;
+
     private struct Room
     {
         public RectInt Rect;
@@ -55,13 +60,19 @@ public class DungeonLayoutGenerator : MonoBehaviour
         //Place The Rooms
         PlaceRooms();
         //Connect the Rooms
+        ConnectRooms();
         //Build The Rooms
         RenderTiles();
+
+        Debug.Log($"Rooms to Corridors - {_roomTileCount}:{_corridorTileCount}");
     }
 
     private void ClearPrevious()
     {
         if (_buildRoot == null) return;
+
+        _roomTileCount = 0;
+        _corridorTileCount = 0;
 
         for (int i = _buildRoot.childCount - 1; i >= 0; i--)
         {
@@ -119,12 +130,136 @@ public class DungeonLayoutGenerator : MonoBehaviour
         for (int x = rect.x; x < rect.x + rect.width; x++)
             for (int y = rect.y; y < rect.y + rect.height; y++)
                 if (InBounds(x, y))
+                {
                     _grid[x, y] = 'R';
+                    _roomTileCount++;
+                }
     }
 
     private bool InBounds(int x, int y)
     {
-        return x >= 0 && x < _cols && y>= 0 && y < _rows;
+        return x >= 0 && x < _cols && y >= 0 && y < _rows;
+    }
+
+    private void ConnectRooms()
+    {
+        if (_rooms.Count <= 1) return;
+
+        //Picks a random Sort for the rooms
+        SortRooms();
+
+        for (int i = 0; i < _rooms.Count - 1; i++)
+        {
+            var a = _rooms[i].Center;
+            var b = _rooms[i + 1].Center;
+
+            CarveCorridorL(a, b);
+        }
+    }
+
+    private void SortRooms()
+    {
+        int sortID = _rng.Next(0, 3);
+
+        switch (sortID)
+        {
+            case 0:
+                // Sort rooms by Center's X
+                _rooms.Sort((a, b) => a.Center.x.CompareTo(b.Center.x));
+                break;
+            case 1:
+                // Sort rooms by Center's Y
+                _rooms.Sort((a, b) => a.Center.y.CompareTo(b.Center.y));
+                break;
+            case 2:
+                // Sort by Distance
+                _rooms = NearestSort(_rooms, 0);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private List<Room> NearestSort(List<Room> rooms, int startIndex = 0)
+    {
+        if (rooms == null || rooms.Count == 0)
+            return new List<Room>();
+
+        if (startIndex < 0 || startIndex >= rooms.Count)
+            startIndex = 0;
+
+        var orderList = new List<Room>(rooms.Count);
+        var visited = new bool[rooms.Count];
+
+        int current = startIndex;
+        orderList.Add(rooms[current]);
+        visited[current] = true;
+
+        for (int step = 1; step < rooms.Count; step++)
+        {
+            int next = -1;
+            float bestDistSqr = float.PositiveInfinity;
+            var currentPOS = rooms[current].Center;
+
+            // Find the closest Room
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                if (visited[i]) continue;
+
+                float dSq = (rooms[i].Center - currentPOS).sqrMagnitude;
+
+                if (dSq < bestDistSqr || Mathf.Approximately(dSq, bestDistSqr) && rooms[i].Center.x < rooms[next].Center.x)
+                {
+                    bestDistSqr = dSq;
+                    next = i;
+                }
+            }
+            if (next == -1)
+                break;
+
+            visited[next] = true;
+            orderList.Add(rooms[next]);
+            current = next;
+        }
+
+        return orderList;
+    }
+
+    private void CarveCorridorL(Vector2Int a, Vector2Int b)
+    {
+        // == Horizontal Move ==
+        // Move Right if B.x > A.x, otherwise move left
+        int xStep = (a.x < b.x) ? 1 : -1;
+
+        for (int x = a.x; x != b.x; x += xStep)
+        {
+            if (InBounds(x, a.y) && _grid[x, a.y] == '\0')
+            {
+                _grid[x, a.y] = 'C';
+                _corridorTileCount++;
+            }
+        }
+
+        // == Vertical Move ==
+        // Move up if B.y > A.y, otherwise move down
+        int yStep = (a.y < b.y) ? 1 : -1;
+
+        for (int y = a.y; y != b.y; y += yStep)
+        {
+            if (InBounds(b.x, y) && _grid[b.x, y] == '\0')
+            {
+                _grid[b.x, y] = 'C';
+                _corridorTileCount++;
+            }
+        }
+
+        // == Final Tile ==
+        //Mark the Destination if it's Empty
+        if (InBounds(b.x, b.y) && _grid[b.x, b.y] == '\0')
+        {
+            _grid[b.x, b.y] = 'C';
+            _corridorTileCount++;
+        }
     }
 
     private void RenderTiles()
