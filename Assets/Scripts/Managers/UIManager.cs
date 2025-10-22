@@ -50,7 +50,7 @@ public class UIManager : MonoSingleton<UIManager>
         _isMainMenuOpen = _mainMenuPanel.activeInHierarchy;
     }
 
-    public void UpdateCompass(Direction direction)
+    public void UpdateCompass(Directions direction)
     {
         _compassBehavior.SetDirection(direction);
     }

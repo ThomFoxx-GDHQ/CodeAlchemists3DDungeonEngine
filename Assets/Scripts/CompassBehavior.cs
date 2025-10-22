@@ -3,27 +3,27 @@ using UnityEngine;
 public class CompassBehavior : MonoBehaviour
 {
     [SerializeField] Transform _rose;
-    Direction _forwardDirection;
+    Directions _forwardDirection;
     Vector3 _rotation = Vector3.zero;
 
 
-    public void SetDirection(Direction forwardDirection)
+    public void SetDirection(Directions forwardDirection)
     {
         _rotation = _rose.rotation.eulerAngles;
         _forwardDirection = forwardDirection;
 
         switch (forwardDirection)
         {
-            case Direction.North:
+            case Directions.North:
                 _rotation.z = 0;
                 break;
-            case Direction.East:
+            case Directions.East:
                 _rotation.z = 90;
                 break;
-            case Direction.South:
+            case Directions.South:
                 _rotation.z = 180;
                 break;
-            case Direction.West:
+            case Directions.West:
                 _rotation.z = 270;
                 break;
             default:

@@ -35,6 +35,11 @@ public class DungeonLayoutGenerator : MonoBehaviour
     private int _roomTileCount = 0;
     private int _corridorTileCount = 0;
 
+    public char[,] Grid => _grid;
+    public int Width => _cols;
+    public int Height => _rows;
+    public float TileSize => _tilesize;
+
     private struct Room
     {
         public RectInt Rect;

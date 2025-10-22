@@ -35,7 +35,7 @@ public enum MoveType
     MoveToCharacter
 }
 
-public enum Direction
+public enum Directions
 {
     North,
     East,
