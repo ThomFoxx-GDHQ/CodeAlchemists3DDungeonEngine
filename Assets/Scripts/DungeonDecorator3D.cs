@@ -56,7 +56,7 @@ public class DungeonDecorator3D : MonoBehaviour
                     if (IsDoorHere(x,y,dir))
                     {
                         if (current == 'C')
-                        { } //Spawn Door
+                            SpawnDoor(basePos, dir);
                         continue;
                     }
 
@@ -78,10 +78,59 @@ public class DungeonDecorator3D : MonoBehaviour
         wall.transform.localScale = new Vector3(TileSize, _wallHeight, _wallThickness);
     }
 
+    private void SpawnDoor(Vector3 basePOS, Direction dir)
+    {
+        if (_doorTilePrefab == null) return;
+
+        Vector3 center = basePOS + dir.world * (TileSize * .5f);
+        Quaternion rotation = GetRotation(dir);
+
+        var door = Instantiate(_doorTilePrefab, center, rotation, _doorsRoot);
+        door.transform.localScale = new Vector3(TileSize, _wallHeight, _wallThickness);
+    }
 
     private bool IsDoorHere(int x, int y, Direction d)
     {
-        return false;
+        if (Grid[x, y] != 'C') return false;
+        if (GetCell(x + d.dx, y + d.dy) != 'R') return false;
+
+        int inlineCount = 0;
+        if (d.id == Directions.North || d.id == Directions.South)
+        {
+            if (GetCell(x, y + 1) == 'C') inlineCount++;
+            if (GetCell(x, y - 1) == 'C') inlineCount++;
+        }
+        else
+        {
+            if (GetCell(x + 1, y) == 'C') inlineCount++;
+            if (GetCell(x - 1, y) == 'C') inlineCount++;
+        }
+        if (inlineCount > 1) return false;
+
+        bool parallelLeftFaces = false;
+        bool parallelRightFaces = false;
+        if (d.id == Directions.North || d.id == Directions.South)
+        {
+            if (GetCell(x-1,y) =='C' && GetCell((x-1) +d.dx, y +d.dy) == 'R')
+                parallelLeftFaces = true;
+            if (GetCell(x + 1, y) == 'C' && GetCell((x + 1) + d.dx, y + d.dy) == 'R')
+                parallelRightFaces = true;
+
+            if (parallelLeftFaces ||  parallelRightFaces)
+                if (parallelLeftFaces) return false;
+        }
+        else
+        {
+            if (GetCell(x, y - 1) == 'C' && GetCell(x + d.dx, (y - 1) + d.dy) == 'R')
+                parallelLeftFaces = true;
+            if (GetCell(x, y + 1) == 'C' && GetCell(x + d.dx, (y + 1) + d.dy) == 'R')
+                parallelRightFaces = true;
+
+            if (parallelLeftFaces || parallelRightFaces)
+                if (parallelLeftFaces) return false;
+        }
+
+        return true;
     }
 
     // ===Helpers===

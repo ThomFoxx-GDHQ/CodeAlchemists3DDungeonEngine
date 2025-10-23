@@ -70,6 +70,8 @@ public class DungeonLayoutGenerator : MonoBehaviour
         RenderTiles();
 
         Debug.Log($"Rooms to Corridors - {_roomTileCount}:{_corridorTileCount}");
+
+        FindFirstObjectByType<DungeonDecorator3D>(FindObjectsInactive.Include).BuildDungeon3d();
     }
 
     private void ClearPrevious()
