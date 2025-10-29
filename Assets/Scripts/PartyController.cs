@@ -17,6 +17,7 @@ public class PartyController : MonoBehaviour
 
     Vector3 _startPOS;
     Vector3 _targetPOS;
+    bool _isMoving = false;
 
     private void OnEnable()
     {
@@ -28,7 +29,7 @@ public class PartyController : MonoBehaviour
 
     private void Turn_started(InputAction.CallbackContext obj)
     {
-        if (!IsAbleToMove()) return;
+        if (!IsAbleToMove() || _isMoving) return;
 
         //Debug.Log(obj.ToString());
         _turn = obj.ReadValue<float>();
@@ -41,7 +42,7 @@ public class PartyController : MonoBehaviour
 
     private void Move_started(InputAction.CallbackContext obj)
     {
-        if (!IsAbleToMove()) return;
+        if (!IsAbleToMove() || _isMoving) return;
 
         //Debug.Log(obj.ToString());
         _movement = obj.ReadValue<Vector2>();
@@ -69,8 +70,9 @@ public class PartyController : MonoBehaviour
     
     IEnumerator MoveRoutine(Vector3 direction)
     {
-        _startPOS = transform.position;        
-        _targetPOS = transform.position + direction;
+        _isMoving = true;
+        _startPOS = TruncateVector3(transform.position);
+        _targetPOS = _startPOS + direction;
         float step;
         while (transform.position != _targetPOS)
         {
@@ -78,6 +80,7 @@ public class PartyController : MonoBehaviour
             step = _speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _targetPOS, step);
         }
+        _isMoving = false;
     }
 
     private bool IsAbleToMove()
@@ -92,6 +95,7 @@ public class PartyController : MonoBehaviour
 
     IEnumerator TurnRoutine(float turnDirection)
     {
+        _isMoving = true;
         float currentRotation = 0;
         float step = 0;
         float speed = _turnSpeed;
@@ -130,6 +134,7 @@ public class PartyController : MonoBehaviour
         }
         transform.rotation = Quaternion.Euler(rotation);
         UIManager.Instance.UpdateCompass(rotationDirection);
+        _isMoving = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -159,5 +164,14 @@ public class PartyController : MonoBehaviour
         _input.Player.Disable();
         _input.Player.Move.started -= Move_started;
         _input.Player.Turn.started -= Turn_started;
+    }
+
+    private Vector3 TruncateVector3( Vector3 value )
+    {
+        value.x = Mathf.RoundToInt( value.x );
+        value.y = Mathf.RoundToInt( value.y );
+        value.z = Mathf.RoundToInt( value.z );
+
+        return value;
     }
 }

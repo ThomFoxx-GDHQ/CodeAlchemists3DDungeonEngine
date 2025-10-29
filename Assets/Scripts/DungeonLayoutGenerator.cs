@@ -72,6 +72,15 @@ public class DungeonLayoutGenerator : MonoBehaviour
         Debug.Log($"Rooms to Corridors - {_roomTileCount}:{_corridorTileCount}");
 
         FindFirstObjectByType<DungeonDecorator3D>(FindObjectsInactive.Include).BuildDungeon3d();
+
+        var party = FindFirstObjectByType<PartyController>();
+        Vector3 pos = new Vector3(_rooms[0].Center.x, 1, _rooms[0].Center.y);
+        pos.x += _rooms[0].Rect.x;
+        pos.z += _rooms[0].Rect.y;
+        if (party != null)
+        {
+            party.transform.position = pos;
+        }
     }
 
     private void ClearPrevious()
@@ -293,5 +302,10 @@ public class DungeonLayoutGenerator : MonoBehaviour
                     Instantiate(prefab, worldPos, Quaternion.identity, _buildRoot);
 
             }
+    }
+
+    public void SetSeed(int seed)
+    {
+        _seed = seed;
     }
 }
