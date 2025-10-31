@@ -6,6 +6,7 @@ public class DungeonManager : MonoSingleton<DungeonManager>
 {
     [SerializeField] DungeonLayoutGenerator _generator;
     [SerializeField] List<int> _dungeonSeedList = new List<int>();
+    [SerializeField] int _floorNumber = 1;
 
     private void Start()
     {
@@ -19,9 +20,27 @@ public class DungeonManager : MonoSingleton<DungeonManager>
         {
             count++;
             count %= _dungeonSeedList.Count;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
             _generator.SetSeed(_dungeonSeedList[count]);
             _generator.Generate();
         }
     }
+    
+    public void GenerateNextFloor(int floorNumber)
+    {
+        if (floorNumber >= _dungeonSeedList.Count)
+        {
+            while (_dungeonSeedList.Count <= floorNumber)
+            {
+                int seed = Random.Range(0, 10000000);
+                _dungeonSeedList.Add(seed);
+            }
+        }
+
+        _generator.SetSeed(_dungeonSeedList[floorNumber]);
+        _generator.Generate();
+
+        _floorNumber = floorNumber;
+    }
+
 }

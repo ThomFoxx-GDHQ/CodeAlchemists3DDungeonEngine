@@ -21,6 +21,8 @@ public class DungeonLayoutGenerator : MonoBehaviour
     [SerializeField] private GameObject _floorPrefab;
     [SerializeField] private GameObject _corridorPrefab;
     [SerializeField] private Transform _buildRoot;
+    [SerializeField] private GameObject _downObjectPrefab;
+    [SerializeField] private GameObject _upObjectPrefab;
 
     [Header("Randomness")]
     [SerializeField] private int _seed = 12345;
@@ -77,10 +79,23 @@ public class DungeonLayoutGenerator : MonoBehaviour
         Vector3 pos = new Vector3(_rooms[0].Center.x, 1, _rooms[0].Center.y);
         pos.x += _rooms[0].Rect.x;
         pos.z += _rooms[0].Rect.y;
+        
+        pos = EvenOutPosition(pos);
+
         if (party != null)
         {
             party.transform.position = pos;
         }
+        pos.y = 0;
+        Instantiate(_upObjectPrefab, pos, Quaternion.identity, _buildRoot);
+
+        pos = new Vector3(_rooms[_rooms.Count - 1].Center.x, 0, _rooms[_rooms.Count - 1].Center.y);
+        pos.x += _rooms[_rooms.Count - 1].Rect.x;
+        pos.z += _rooms[_rooms.Count - 1].Rect.y;
+
+        pos = EvenOutPosition(pos);
+
+        Instantiate(_downObjectPrefab, pos, Quaternion.identity, _buildRoot);
     }
 
     private void ClearPrevious()
@@ -307,5 +322,20 @@ public class DungeonLayoutGenerator : MonoBehaviour
     public void SetSeed(int seed)
     {
         _seed = seed;
+    }
+
+    private Vector3 EvenOutPosition(Vector3 position)
+    {
+        Vector3 newpos = Vector3.zero;
+
+        if (position.x % 2 != 0)
+            newpos.x = position.x + 1;
+        else newpos.x = position.x;
+        newpos.y = position.y;
+        if (position.z % 2 != 0)
+            newpos.z = position.z + 1;
+        else newpos.z = position.z;
+
+        return newpos;
     }
 }
