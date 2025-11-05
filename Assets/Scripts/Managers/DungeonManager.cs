@@ -8,9 +8,12 @@ public class DungeonManager : MonoSingleton<DungeonManager>
     [SerializeField] List<int> _dungeonSeedList = new List<int>();
     [SerializeField] int _floorNumber = 1;
 
+    public int Floor => _floorNumber;
+
     private void Start()
     {
-        StartCoroutine(TestGeneration());
+        //StartCoroutine(TestGeneration());
+        //StartCoroutine(TestGeneration());
     }
 
     IEnumerator TestGeneration()
@@ -28,6 +31,12 @@ public class DungeonManager : MonoSingleton<DungeonManager>
     
     public void GenerateNextFloor(int floorNumber)
     {
+        if (floorNumber < 0)
+        {
+            Debug.Log("Exit Dungeon");
+            return;
+        }
+
         if (floorNumber >= _dungeonSeedList.Count)
         {
             while (_dungeonSeedList.Count <= floorNumber)

@@ -107,11 +107,12 @@ public class DungeonLayoutGenerator : MonoBehaviour
 
         for (int i = _buildRoot.childCount - 1; i >= 0; i--)
         {
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
             DestroyImmediate(_buildRoot.GetChild(i).gameObject);
-#else
-            Destroy(_buildRoot.GetChild(i).gameObject);
-#endif
+#else 
+*/            Destroy(_buildRoot.GetChild(i).gameObject);
+            Debug.Log($"Destroying Children in {_buildRoot.name}");
+//#endif
         }
     }
 

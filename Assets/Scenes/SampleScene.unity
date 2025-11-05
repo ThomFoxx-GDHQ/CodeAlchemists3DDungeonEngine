@@ -56198,7 +56198,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 15
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -62274,7 +62274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonManager
   _generator: {fileID: 1106550672}
-  _dungeonSeedList: bd33000036cc0000558101009900000039300000
+  _dungeonSeedList: bd330000
   _floorNumber: 0
 --- !u!1 &1147077764
 GameObject:

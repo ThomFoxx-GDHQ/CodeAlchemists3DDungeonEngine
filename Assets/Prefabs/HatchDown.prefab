@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6229609691318549938}
   - component: {fileID: 4460407284702655563}
+  - component: {fileID: 7971990291069339001}
   m_Layer: 0
   m_Name: HatchDown
   m_TagString: Untagged
@@ -54,6 +55,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.5150561, z: 1}
   m_Center: {x: 0, y: 0.74247193, z: 0}
+--- !u!114 &7971990291069339001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572503633207630935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039a881bda58a924e86623937a3d169d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StairsBehavior
+  _direction: 1
+  _numberOfFloorsToChange: 1
+  _active: 1
 --- !u!1001 &7928023214208272680
 PrefabInstance:
   m_ObjectHideFlags: 0

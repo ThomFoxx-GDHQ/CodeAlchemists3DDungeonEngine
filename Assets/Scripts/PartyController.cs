@@ -174,4 +174,10 @@ public class PartyController : MonoBehaviour
 
         return value;
     }
+
+    public void StopAllRoutines()
+    {
+        StopAllCoroutines();
+        _isMoving = false;
+    }
 }

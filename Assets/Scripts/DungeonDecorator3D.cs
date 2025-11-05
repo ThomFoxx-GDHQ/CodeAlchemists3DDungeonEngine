@@ -140,11 +140,12 @@ public class DungeonDecorator3D : MonoBehaviour
 
         for (int i = root.childCount - 1; i >= 0; i--)
         {
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
             DestroyImmediate(root.GetChild(i).gameObject);
-#else
+#else*/
             Destroy(root.GetChild(i).gameObject);
-#endif
+            Debug.Log($"Destorying Children in {root.name}");
+//#endif
         }
     }
 
