@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StairsBehavior
   _direction: 1
   _numberOfFloorsToChange: 1
-  _active: 1
+  _active: 0
 --- !u!1001 &7928023214208272680
 PrefabInstance:
   m_ObjectHideFlags: 0

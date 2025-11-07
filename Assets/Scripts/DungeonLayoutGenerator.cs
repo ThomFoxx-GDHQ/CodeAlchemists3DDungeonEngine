@@ -96,6 +96,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
         pos = EvenOutPosition(pos);
 
         Instantiate(_downObjectPrefab, pos, Quaternion.identity, _buildRoot);
+        DungeonManager.Instance.SetFloorExit(_seed, pos);
     }
 
     private void ClearPrevious()
