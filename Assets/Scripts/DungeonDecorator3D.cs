@@ -144,7 +144,7 @@ public class DungeonDecorator3D : MonoBehaviour
             DestroyImmediate(root.GetChild(i).gameObject);
 #else*/
             Destroy(root.GetChild(i).gameObject);
-            Debug.Log($"Destorying Children in {root.name}");
+            //Debug.Log($"Destorying Children in {root.name}");
 //#endif
         }
     }

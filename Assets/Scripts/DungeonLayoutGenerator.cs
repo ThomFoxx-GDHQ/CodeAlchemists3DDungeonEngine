@@ -71,22 +71,28 @@ public class DungeonLayoutGenerator : MonoBehaviour
         //Build The Rooms
         RenderTiles();
 
-        Debug.Log($"Rooms to Corridors - {_roomTileCount}:{_corridorTileCount}");
+        //Debug.Log($"Rooms to Corridors - {_roomTileCount}:{_corridorTileCount}");
 
         FindFirstObjectByType<DungeonDecorator3D>(FindObjectsInactive.Include).BuildDungeon3d();
 
-        var party = FindFirstObjectByType<PartyController>();
-        Vector3 pos = new Vector3(_rooms[0].Center.x, 1, _rooms[0].Center.y);
+        GenerateExits();
+    }
+
+    private void GenerateExits()
+    {
+        //var party = FindFirstObjectByType<PartyController>();
+        Vector3 pos = new Vector3(_rooms[0].Center.x, 0, _rooms[0].Center.y);
         pos.x += _rooms[0].Rect.x;
         pos.z += _rooms[0].Rect.y;
-        
-        pos = EvenOutPosition(pos);
 
-        if (party != null)
+        pos = EvenOutPosition(pos);
+        DungeonManager.Instance.SetFloorEntrance(_seed, pos);
+
+        /*if (party != null)
         {
             party.transform.position = pos;
-        }
-        pos.y = 0;
+        }*/
+
         Instantiate(_upObjectPrefab, pos, Quaternion.identity, _buildRoot);
 
         pos = new Vector3(_rooms[_rooms.Count - 1].Center.x, 0, _rooms[_rooms.Count - 1].Center.y);
@@ -112,7 +118,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
             DestroyImmediate(_buildRoot.GetChild(i).gameObject);
 #else 
 */            Destroy(_buildRoot.GetChild(i).gameObject);
-            Debug.Log($"Destroying Children in {_buildRoot.name}");
+            //Debug.Log($"Destroying Children in {_buildRoot.name}");
 //#endif
         }
     }

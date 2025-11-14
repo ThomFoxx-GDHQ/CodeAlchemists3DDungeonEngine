@@ -62093,6 +62093,7 @@ GameObject:
   - component: {fileID: 1146205664}
   - component: {fileID: 1146205665}
   - component: {fileID: 1146205666}
+  - component: {fileID: 1146205667}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -62276,7 +62277,23 @@ MonoBehaviour:
   _generator: {fileID: 1106550672}
   _dungeonSeedList: 
   _dungeonExitList: []
+  _dungeonEntranceList: []
   _floorNumber: 0
+--- !u!114 &1146205667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146205658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0fcffcf71f2474ea4eaeed60603d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
+  _enemyPrefabs:
+  - {fileID: 1166994886129360274, guid: 923885f2a4cceef45a8bea6378a79fdd, type: 3}
+  _numberToSpawn: 5
 --- !u!1 &1147077764
 GameObject:
   m_ObjectHideFlags: 0
