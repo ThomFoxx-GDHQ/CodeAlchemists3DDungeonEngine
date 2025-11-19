@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StairsBehavior : MonoBehaviour
 {
-    private enum StairDirection
+    public enum StairDirection
     {
         Up,
         Down
@@ -13,6 +13,8 @@ public class StairsBehavior : MonoBehaviour
     [SerializeField] private int _numberOfFloorsToChange = 1;
     [SerializeField] private bool _active = false;
     private int _floorToGoTo;
+
+    public StairDirection Stairs => _direction;
 
     IEnumerator DelayMoveRoutine(Vector3 pos, Collider other)
     {

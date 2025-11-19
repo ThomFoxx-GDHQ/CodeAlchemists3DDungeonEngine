@@ -71,7 +71,7 @@ public class PartyController : MonoBehaviour
     IEnumerator MoveRoutine(Vector3 direction)
     {
         _isMoving = true;
-        _startPOS = EvenOutPosition(transform.position);
+        _startPOS = PositionHelper.EvenOutPosition(transform.position);
         _targetPOS = _startPOS + direction;
         float step;
         while (transform.position != _targetPOS)
@@ -166,35 +166,10 @@ public class PartyController : MonoBehaviour
         _input.Player.Turn.started -= Turn_started;
     }
 
-    private Vector3 TruncateVector3( Vector3 value )
-    {
-        value.x = Mathf.RoundToInt( value.x );
-        value.y = Mathf.RoundToInt( value.y );
-        value.z = Mathf.RoundToInt( value.z );
-
-        return value;
-    }
-
-    private Vector3 EvenOutPosition(Vector3 position)
-    {
-        position = TruncateVector3(position);
-        Vector3Int newpos = Vector3Int.zero;
-
-        if (position.x % 2 != 0)
-            newpos.x = (int)position.x + 1;
-        else newpos.x = (int)position.x;
-        newpos.y = (int)position.y;
-        if (position.z % 2 != 0)
-            newpos.z = (int)position.z + 1;
-        else newpos.z = (int)position.z;
-
-        return newpos;
-    }
-
     public void StopAllRoutines()
     {
         StopAllCoroutines();
-        transform.position = EvenOutPosition(transform.position);
+        transform.position = PositionHelper.EvenOutPosition(transform.position);
         _isMoving = false;
     }
 }

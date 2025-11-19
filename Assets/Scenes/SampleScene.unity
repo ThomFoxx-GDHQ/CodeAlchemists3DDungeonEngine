@@ -62279,6 +62279,7 @@ MonoBehaviour:
   _dungeonExitList: []
   _dungeonEntranceList: []
   _floorNumber: 0
+  _numberOfFloors: 2
 --- !u!114 &1146205667
 MonoBehaviour:
   m_ObjectHideFlags: 0

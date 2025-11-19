@@ -17,6 +17,11 @@ public class SpawnManager : MonoBehaviour
     [ContextMenu("Spawn Enemies")]
     public void SpawnEnemies()
     {
+        //== Find Old Enemies and Remove ==//
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = enemies.Length-1; i>=0; i--)
+            Destroy(enemies[i].gameObject);
+
         SearchGridForRooms();
 
         for (int i = 0; i < _numberToSpawn; i++)

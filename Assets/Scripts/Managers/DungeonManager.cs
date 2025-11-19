@@ -9,30 +9,17 @@ public class DungeonManager : MonoSingleton<DungeonManager>
     [SerializeField] List<Vector3> _dungeonExitList = new List<Vector3>();
     [SerializeField] List<Vector3> _dungeonEntranceList = new List<Vector3>();
     [SerializeField] int _floorNumber = 1;
+    [SerializeField] int _numberOfFloors = 1;
     bool _isReturningToFloor;
-
+    SpawnManager _spawnManager;
     public int Floor => _floorNumber;
     public Vector3 ExitPosition(int i) => _dungeonExitList[i];
 
     private void Start()
     {
-        //StartCoroutine(TestGeneration());
-        //StartCoroutine(TestGeneration());
+        _spawnManager = FindFirstObjectByType<SpawnManager>(FindObjectsInactive.Include);
     }
 
-    IEnumerator TestGeneration()
-    {
-        int count = 0;
-        while (true)
-        {
-            count++;
-            count %= _dungeonSeedList.Count;
-            yield return new WaitForSeconds(2);
-            _generator.SetSeed(_dungeonSeedList[count]);
-            _generator.Generate();
-        }
-    }
-    
     public void GenerateNextFloor(int floorNumber)
     {
         //===Exit the Dungeon here ====//
@@ -76,6 +63,20 @@ public class DungeonManager : MonoSingleton<DungeonManager>
         }
 
         _floorNumber = floorNumber;
+
+        //== Check if floor is Bottom Then clear Exits ===//
+        if (_floorNumber == _numberOfFloors-1)
+        {
+            var exits = FindObjectsByType<StairsBehavior>(FindObjectsSortMode.None);
+            for (int i = exits.Length-1; i >= 0; i--)
+            {
+                if (exits[i].Stairs == StairsBehavior.StairDirection.Down)
+                    Destroy (exits[i].gameObject);
+            }
+        }
+
+        //== Generate Our Enemies ==//
+        _spawnManager.SpawnEnemies();
     }
 
     public void SetFloorExit(int seed, Vector3 position)
@@ -100,5 +101,13 @@ public class DungeonManager : MonoSingleton<DungeonManager>
             else
                 _dungeonEntranceList[i] = position;
         }
+    }
+
+    public void SetFloorCount(int floors)
+    {
+        if (floors > 0)
+            _numberOfFloors = floors;
+        else
+            Debug.LogWarning("Floor count for Dungeon must be greater than Zero (0).");
     }
 }
