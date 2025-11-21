@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e53acd6d334bb47a1c2732fea3becd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProtoTypeEnemyBehavior
+  _speed: 5
 --- !u!1 &5365147878864733842
 GameObject:
   m_ObjectHideFlags: 0
